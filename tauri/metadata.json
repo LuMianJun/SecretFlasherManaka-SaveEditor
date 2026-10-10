@@ -304,6 +304,7 @@
     "IsOpenEndTryal": "已显示试玩结束提示"
   },
   "categories": {
+    "common": "常用",
     "basic": "RP 与基础数据",
     "player": "玩家能力",
     "tasks": "任务历史与无人机",
@@ -2742,6 +2743,7 @@
       "DroneMissionMaxRpBonus100PerStageDictDict"
     ]
   },
+  "commonFields": ["CurrentRp","ExposeExp","ItemDict","PlayerMaxLife","AdultGoodsReinforceEffectDict","CosplayPartsReinforceEffectDict"],
   "hiddenRootFields": ["AutoSaveTime","InterruptSaveTime","HomeSaveTime","IsTrial","SaveDataSlotIndex","ManualSaveTime","RankData","DifficultData","TotalPlayTimeData"],
   "hideUnknownEntryTables": ["skills","goods","costumes"],
   "hiddenFieldPaths": [
