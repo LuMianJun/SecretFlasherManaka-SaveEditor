@@ -12,7 +12,7 @@
     "ExposeExp": "露出等级经验值",
     "CurrentEarnThisTimeRp": "本次外出待结算 RP",
     "CurrentStageType": "当前场景",
-    "IsDaytime": "白天",
+    "IsDaytime": "昼夜时间",
     "DifficultType": "难度",
     "ReleaseFastTravel": "快速移动已开放",
     "ReleasedInfoRank": "已解锁内容的提示等级",
@@ -101,10 +101,7 @@
     "VibeRemoconLevel": "遥控器等级",
     "PistonMachineModeType": "活塞机模式",
     "DroneLevel": "无人机等级",
-    "AutoSaveTime": "自动存档时间",
     "ManualSaveTime": "手动存档时间",
-    "HomeSaveTime": "回家存档时间",
-    "InterruptSaveTime": "中断存档时间",
     "TotalPlayTimeData": "各槽位游玩时间",
     "RankData": "各槽位等级",
     "DifficultData": "各槽位难度",
@@ -308,11 +305,11 @@
   },
   "categories": {
     "basic": "RP 与基础数据",
-    "player": "玩家状态",
-    "tasks": "任务与无人机",
+    "player": "玩家能力",
+    "tasks": "任务历史与无人机",
     "inventory": "物品与装备",
     "growth": "技能与强化",
-    "world": "场景与 NPC",
+    "world": "场景与解锁",
     "statistics": "历史统计",
     "character": "角色自定义与外观",
     "settings": "设置与快捷操作",
@@ -344,7 +341,7 @@
     "UsingWasherIndex": "world",
     "MotionSpeedScaleIndex": "settings",
     "WalkSpeedScaleIndex": "settings",
-    "CosplayPartsOptionDataDict": "inventory",
+    "CosplayPartsOptionDataDict": "character",
     "ConfirmedReinforceRank": "growth",
     "CosplayMySetNames": "character",
     "CustomizeMySetNames": "character",
@@ -386,7 +383,7 @@
     "PlayerRemainBodyPaintTime": "player",
     "PlayerPosition": "world",
     "PlayerRotation": "world",
-    "PlayerCurrentClothes": "player",
+    "PlayerCurrentClothes": "inventory",
     "PlayerCurrentHadObject": "player",
     "PlayerCurrentHoldClothes": "player",
     "PlayerIsAttachHandcuffs": "player",
@@ -394,14 +391,14 @@
     "AttachedHandcuffType": "player",
     "PlayerHandcuffTimerRemainTime": "player",
     "PlayerHandcuffTimerSetTime": "player",
-    "PlayerVibrationModeType": "player",
+    "PlayerVibrationModeType": "settings",
     "PlayerLife": "player",
-    "PlayerMaxLife": "player",
+    "PlayerMaxLife": "growth",
     "PlayerCurrentClothesAState": "player",
     "PlayerCurrentClothesBState": "player",
     "PlayerPassiveSkillActiveDict": "growth",
-    "CurrentSexualityType": "player",
-    "IsActiveFutanari": "player",
+    "CurrentSexualityType": "character",
+    "IsActiveFutanari": "character",
     "IsActiveInvisible": "player",
     "IsActiveInvisibleReusable": "player",
     "IsActiveBodyPaintReusable": "player",
@@ -414,16 +411,13 @@
     "AdultGoodsReinforceEffectDict": "growth",
     "CosplayPartsReinforceEffectDict": "growth",
     "CostumeReinforceEffectDict": "growth",
-    "HairTypeList": "character",
+    "HairTypeList": "inventory",
     "LoadoutDatas": "character",
     "LoadoutCustomizeDatas": "character",
-    "VibeRemoconLevel": "player",
-    "PistonMachineModeType": "player",
+    "VibeRemoconLevel": "growth",
+    "PistonMachineModeType": "settings",
     "DroneLevel": "tasks",
-    "AutoSaveTime": "player",
     "ManualSaveTime": "player",
-    "HomeSaveTime": "player",
-    "InterruptSaveTime": "player",
     "TotalPlayTimeData": "player",
     "RankData": "player",
     "DifficultData": "player",
@@ -2420,49 +2414,6 @@
       "17": "肤色 #A38B8B",
       "18": "肤色 #7D6C73"
     },
-    "custom_missions": {
-      "69001": "在便利店收银台小便",
-      "109100": "未隐身时，夜间在路口露出且未被发现",
-      "109200": "未隐身时，按门铃后，在未被发现时露出并蹲下等待",
-      "149200": "未隐身时，视野受限时，在迷宫内赤裸蹲行12米",
-      "149201": "未隐身时，在公园中央被人注视时，露出并蹲下，保持对方在画面内",
-      "149202": "未隐身时，视野受限时脱下外套并露出，与落地外套拉开18米路线距离",
-      "149203": "未隐身时，在开门厕所内被人注视时保持赤裸，让对方出现在画面内",
-      "69200": "未隐身时，把外套留在至少4米外，脱下外套并露出结账",
-      "69101": "未隐身时，露出且未被发现地累计移动12米",
-      "129200": "未隐身时，夜间在路灯下被人注视时，露出并蹲下等待",
-      "129101": "未隐身时，洗衣效果有效时赤裸累计移动15米",
-      "129201": "未隐身时，洗衣效果有效时，在天桥上赤裸被人注视，让对方出现在画面内",
-      "159200": "未隐身时，视野受限时，与附近路人同在电梯内并露出",
-      "159201": "未隐身时，与附近路人同乘电梯并保持赤裸，到站开门",
-      "159202": "未隐身时，脱下外套，在顶层与落地外套保持至少5米高度差，露出并蹲下",
-      "119200": "未隐身时，视野受限时赤裸乘自动扶梯",
-      "119201": "未隐身时，戴有效手铐且视野受限时，在路人路线内露出并移动12米",
-      "79100": "未隐身时，脱下外套露出且未被发现，与落地外套拉开12米路线距离",
-      "79200": "未隐身时，外套放在试衣间时，脱下外套并在人来人往的地方赤裸蹲行10米",
-      "109101": "未隐身时，按门铃后在门前露出，连续5秒",
-      "149100": "未隐身时，在迷宫内赤裸蹲行18米",
-      "149101": "未隐身时，白天在公园中央露出，连续8秒",
-      "149102": "未隐身时，脱下外套并露出，与落地外套拉开25米路线距离",
-      "149103": "未隐身时，在开门厕所内保持赤裸，连续5秒",
-      "69100": "未隐身时，结账服务有效时露出，连续3秒",
-      "129100": "未隐身时，夜间在路灯下露出，连续6秒",
-      "129102": "未隐身时，视野受限时，在路人路线内露出并移动18米",
-      "159100": "未隐身时，外套落在轿厢外，脱下外套并赤裸乘梯位移8米",
-      "159101": "未隐身时，赤裸乘梯，在2个不同楼层开门",
-      "159102": "未隐身时，赤裸与附近路人同在电梯内，连续4秒",
-      "119100": "未隐身时，赤裸乘自动扶梯，连续3秒",
-      "119101": "未隐身时，戴手铐且状态有效，在他人近旁露出，连续4秒",
-      "79101": "未隐身时，结账服务有效时保持赤裸，连续3秒",
-      "109002": "到住宅区路口停留3秒",
-      "149002": "到公园中央停留3秒",
-      "149003": "进入公园迷宫并停留3秒",
-      "69002": "到便利店收银台停留3秒",
-      "129002": "到繁华街天桥停留3秒",
-      "159002": "到公寓大楼入口停留3秒",
-      "159003": "到公寓大楼顶层停留3秒",
-      "119002": "在购物中心乘自动扶梯累计3秒"
-    },
     "meta": {
       "schema": 1,
       "locale": "sc",
@@ -2493,8 +2444,7 @@
         "fast_travel": 8,
         "achievements": 11,
         "ring_actions": 31,
-        "skin_colors": 19,
-        "custom_missions": 41
+        "skin_colors": 19
       },
       "untranslated_literals_or_keys": [],
       "records_outside_active_master": {
@@ -2522,237 +2472,6 @@
         "大通り": "大街",
         "地下通路": "地下通道",
         "裸": "裸身"
-      },
-      "custom_mission_sources": {
-        "69001": [
-          "D:\\Reverse\\Seleka2\\mod-work\\counter-mission\\Plugin\\TaskCatalog.cs"
-        ],
-        "109100": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "109200": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "149200": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "149201": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "149202": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "149203": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "69200": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "69101": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "129200": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "129101": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "129201": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "159200": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "159201": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "159202": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "119200": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "119201": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "79100": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "79200": [
-          "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
-        ],
-        "109101": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "149100": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "149101": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "149102": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "149103": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "69100": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "129100": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "129102": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "159100": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "159101": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "159102": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "119100": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "119101": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "79101": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
-        ],
-        "109002": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ],
-        "149002": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ],
-        "149003": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ],
-        "69002": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ],
-        "129002": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ],
-        "159002": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ],
-        "159003": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ],
-        "119002": [
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-        ]
-      },
-      "ambiguous_historical_custom_missions": {
-        "109003": {
-          "白天在住宅区累计走20米，再继续移动3秒": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
-          ],
-          "白天在住宅区累计走20米": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-          ]
-        },
-        "149004": {
-          "白天在公园累计走40米，再继续移动3秒": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
-          ],
-          "白天在公园累计走40米": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-          ]
-        },
-        "129003": {
-          "夜间在繁华街累计走30米，再继续移动3秒": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
-          ],
-          "夜间在繁华街累计走30米": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-          ]
-        },
-        "159004": {
-          "乘电梯在3个不同楼层开门，随后留在轿厢内1秒": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
-          ],
-          "乘电梯在3个不同楼层开门": [
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
-            "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
-          ]
-        }
       },
       "notes": [
         "shadeColor is a numeric slider, not an enum.",
@@ -3021,6 +2740,169 @@
     "stageDroneTables": [
       "DroneMissionAchieveCountPerStageDictDict",
       "DroneMissionMaxRpBonus100PerStageDictDict"
+    ]
+  },
+  "hiddenRootFields": ["AutoSaveTime","InterruptSaveTime","HomeSaveTime","IsTrial","SaveDataSlotIndex","ManualSaveTime","RankData","DifficultData","TotalPlayTimeData"],
+  "hideUnknownEntryTables": ["skills","goods","costumes"],
+  "hiddenFieldPaths": [
+    ["GameStateData","value","CurrentStageType"],
+    ["GameStateData","value","DropDataDict"],
+    ["GameStateData","value","ReserveDropList"],
+    ["GameStateData","value","SlowRemainTime"],
+    ["GameStateData","value","NpcSaveDataList"],
+    ["GameStateData","value","UsingWasherIndex"],
+    ["GameStateData","value","IsDroneNeedCharge"],
+    ["GameStateData","value","ActiveDroneMissionId"],
+    ["GameStateData","value","ActiveDroneProgress"],
+    ["GameStateData","value","DroneManagerDropList"],
+    ["GameStateData","value","ContinueMissionAchieveCountDict"],
+    ["GameStateData","value","MissionSatisfyDict"],
+    ["GameStateData","value","ContinueMissionSatisfyDict"],
+    ["GameStateData","value","MissionEarnRpDict"],
+    ["GameStateData","value","DroneMissionEarnRp"],
+    ["GameStateData","value","PlayerEcstasy"],
+    ["GameStateData","value","PlayerMental"],
+    ["GameStateData","value","PlayerMoisture"],
+    ["GameStateData","value","PlayerAddMoisture"],
+    ["GameStateData","value","PlayerFear"],
+    ["GameStateData","value","PlayerRemainBodyPaintTime"],
+    ["GameStateData","value","PlayerPosition"],
+    ["GameStateData","value","PlayerRotation"],
+    ["GameStateData","value","PlayerCurrentHadObject"],
+    ["GameStateData","value","PlayerCurrentHoldClothes"],
+    ["GameStateData","value","PlayerIsAttachHandcuffs"],
+    ["GameStateData","value","PlayerIsAttachMapHandcuffs"],
+    ["GameStateData","value","AttachedHandcuffType"],
+    ["GameStateData","value","PlayerHandcuffTimerRemainTime"],
+    ["GameStateData","value","PlayerHandcuffTimerSetTime"],
+    ["GameStateData","value","PlayerLife"],
+    ["GameStateData","value","PlayerCurrentClothesAState"],
+    ["GameStateData","value","PlayerCurrentClothesBState"],
+    ["GameStateData","value","IsActiveInvisible"],
+    ["GameStateData","value","IsActiveInvisibleReusable"],
+    ["GameStateData","value","IsActiveBodyPaintReusable"],
+    ["GameStateData","value","CurrentEarnThisTimeRp"],
+    ["GameStateData","value","StatistisMaxNudeMoveDistance"],
+    ["GameStateData","value","StatistisMaxEarnRpByOneDay"],
+    ["GameStateData","value","CurrentSexualityType"],
+    ["GameStateData","value","ClothesDict"],
+    ["GameStateData","value","PlayerCurrentClothes"],
+    ["GameStateData","value","PlayerCostumeDict"],
+    ["GameStateData","value","VibeRemoconLevel"],
+    ["GameStateData","value","CostumeReinforceEffectDict"],
+    ["GameStateData","value","ReleasedInfoRank"],
+    ["GameStateData","value","ConfirmedReleasedInfoRank"],
+    ["GameStateData","value","ConfirmedReinforceRank"],
+    ["GameStateData","value","StatistisTotalLostExp"],
+    ["OptionData","value","MissionPanel"],
+    ["OptionData","value","AnsweredFirstSexOption"],
+    ["TutorialData","value","IsOpenEndTryal"],
+    ["TutorialData","value","IsOpenSecondMap"]
+  ],
+  "foldedFieldPaths": [
+    ["PlayerCustomData"],
+    ["OptionData"],
+    ["TutorialData"],
+    ["GameStateData","value","PlayerPassiveSkillActiveDict"],
+    ["GameStateData","value","CosplayReinforceLockState"],
+    ["GameStateData","value","AdultGoodsReinforceLockState"],
+    ["GameStateData","value","DroneMissionAchieveCountPerStageDictDict"],
+    ["GameStateData","value","DroneMissionMaxRpBonus100PerStageDictDict"],
+    ["GameStateData","value","MotionSpeedScaleIndex"],
+    ["GameStateData","value","WalkSpeedScaleIndex"],
+    ["GameStateData","value","CosplayPartsOptionDataDict"],
+    ["GameStateData","value","CosplayMySetNames"],
+    ["GameStateData","value","CustomizeMySetNames"],
+    ["GameStateData","value","LoadoutDatas"],
+    ["GameStateData","value","LoadoutCustomizeDatas"],
+    ["GameStateData","value","PlayerVibrationModeType"],
+    ["GameStateData","value","PistonMachineModeType"],
+    ["GameStateData","value","IsActiveFutanari"],
+    ["GameStateData","value","PlayerFace0Id"],
+    ["GameStateData","value","PlayerFace1Id"],
+    ["GameStateData","value","PlayerFace2Id"],
+    ["GameStateData","value","PlayerFace3Id"],
+    ["GameStateData","value","PlayerFaceIkuId"],
+    ["GameStateData","value","PlayerFaceIkuAfterId"],
+    ["GameStateData","value","RingShortcutModelIndexCommon"],
+    ["GameStateData","value","RingShortcutModelIndexSkill"],
+    ["GameStateData","value","RingShortcutModelIndexSkill3"],
+    ["GameStateData","value","RingShortcutModelIndexSkill4"],
+    ["GameStateData","value","RingShortcutModelIndexSkill5"],
+    ["GameStateData","value","RingShortcutModelIndexSkill6"],
+    ["GameStateData","value","RingShortcutModelIndexSkill7"],
+    ["GameStateData","value","RingShortcutModelIndexSkill8"]
+  ],
+  "skillMaxLevels": {
+    "5": 1,
+    "6": 5,
+    "7": 1,
+    "9": 1,
+    "10": 1,
+    "11": 3,
+    "12": 1,
+    "13": 1,
+    "15": 1,
+    "17": 1,
+    "18": 1,
+    "19": 1,
+    "20": 1,
+    "21": 1,
+    "22": 1,
+    "23": 1,
+    "24": 1,
+    "10000": 1,
+    "10001": 1,
+    "10002": 1,
+    "10003": 1,
+    "10004": 1,
+    "10005": 1,
+    "10006": 1,
+    "10007": 1,
+    "10008": 1,
+    "10009": 1,
+    "10010": 1,
+    "10011": 1,
+    "10012": 1,
+    "10013": 1,
+    "10014": 1,
+    "10015": 1,
+    "10016": 1,
+    "10017": 1,
+    "10018": 1,
+    "10019": 1,
+    "10020": 1,
+    "10021": 1,
+    "10022": 1
+  },
+  "saveScopes": {
+    "typeLabels": {"manual":"手动存档","system":"系统存档","progress":"进度存档"},
+    "gameFields": ["CurrentStageType","DropDataDict","IsDaytime","ReserveDropList","SlowRemainTime","DifficultType","ReleaseFastTravel","NpcSaveDataList","ReleasedInfoRank","ConfirmedReleasedInfoRank","RingShortcutModelIndexCommon","RingShortcutModelIndexSkill","RingShortcutModelIndexSkill3","RingShortcutModelIndexSkill4","RingShortcutModelIndexSkill5","RingShortcutModelIndexSkill6","RingShortcutModelIndexSkill7","RingShortcutModelIndexSkill8","AchievementReceiveSet","UsingWasherIndex","MotionSpeedScaleIndex","WalkSpeedScaleIndex","CosplayPartsOptionDataDict","ConfirmedReinforceRank","CosplayMySetNames","CustomizeMySetNames","CosplayReinforceLockState","AdultGoodsReinforceLockState","IsDroneNeedCharge","ActiveDroneMissionId","ActiveDroneProgress","DroneManagerDropList","DroneMissionAchieveCountDict","DroneMissionAchieveCountPerStageDictDict","DroneMissionMaxRpBonus100PerStageDictDict","RandomMissionClearNumIdDict","MissionAchieveCountDict","ContinueMissionAchieveCountDict","MissionSatisfyDict","ContinueMissionSatisfyDict","MissionEarnRpDict","MissionMaxRpBonus100Dict","DroneMissionEarnRp","StatistisTotalPlayTime","StatistisTotalExposeTime","StatistisGameOverCount","StatistisEcstasyCount","StatistisMaxEarnRp","StatistisTotalEarnRp","StatistisTotalLostRp","StatistisTotalLostExp","StatistisTotalUseRp","StatistisMissionAchiveCount","StatistisMaxRpBoost","StatistisMaxNudeMoveDistance","StatistisMaxEarnRpByOneDay","PlayerEcstasy","PlayerMental","PlayerMoisture","PlayerAddMoisture","PlayerFear","PlayerRemainBodyPaintTime","PlayerPosition","PlayerRotation","PlayerCurrentClothes","PlayerCurrentHadObject","PlayerCurrentHoldClothes","PlayerIsAttachHandcuffs","PlayerIsAttachMapHandcuffs","AttachedHandcuffType","PlayerHandcuffTimerRemainTime","PlayerHandcuffTimerSetTime","PlayerVibrationModeType","PlayerLife","PlayerMaxLife","PlayerCurrentClothesAState","PlayerCurrentClothesBState","PlayerPassiveSkillActiveDict","CurrentSexualityType","IsActiveFutanari","IsActiveInvisible","IsActiveInvisibleReusable","IsActiveBodyPaintReusable","CurrentRp","ExposeExp","CurrentEarnThisTimeRp","SkillLevel","ClothesDict","MAdultGoodsDict","PlayerCostumeDict","ItemDict","PlayerCosplayPartsDict","AdultGoodsReinforceEffectDict","CosplayPartsReinforceEffectDict","CostumeReinforceEffectDict","HairTypeList","LoadoutDatas","LoadoutCustomizeDatas","PlayerFace0Id","PlayerFace1Id","PlayerFace2Id","PlayerFace3Id","PlayerFaceIkuId","PlayerFaceIkuAfterId","VibeRemoconLevel","PistonMachineModeType","DroneLevel"],
+    "rules": [
+      {"path":["GameStateData"],"types":["manual"],"description":"进度数据只从所选进度存档载入。"},
+      {"path":["PlayerCustomData"],"types":["manual"],"description":"身高为初始化标记值时会恢复默认脸型与身体；缺失的发型自定义记录会由游戏补默认值。"},
+      {"path":["SaveDataSlotIndex"],"types":["manual"],"description":"记录进度所属的手动槽位，载入后写入游戏的槽位记录。文件名为 0.sd～19.sd 时，必须与此编号一致。"},
+      {"path":["IsTrial"],"types":["manual"],"state":"conditional","badge":"试玩读取限制","description":"试玩版存档列表用它判断是否拦截正式版存档。载入游戏后，是否为试玩版会由当前运行的程序版本重新设置，修改此值不能将试玩程序变为正式版。"},
+      {"path":["OptionData"],"types":["system"],"badge":"仅系统存档","description":"设置只从 s.sd 载入，所有进度存档共用。"},
+      {"path":["TutorialData"],"types":["system"],"badge":"仅系统存档","description":"教程和已读提示记录只从 s.sd 载入，所有进度存档共用。"},
+      {"path":["ManualSaveTime"],"types":["system"],"state":"metadata","badge":"列表显示信息","description":"s.sd 中的手动槽位保存时间，用于读档列表显示。修改时间不会改动对应进度，也不会创建或保存该槽位；下一次保存该槽位会更新时间。"},
+      {"path":["RankData"],"types":["system"],"state":"metadata","badge":"列表显示信息","description":"s.sd 中各手动槽位的等级摘要，供读档列表显示；修改它不会改变角色实际等级。保存该槽位时会从角色当前等级重新写入。"},
+      {"path":["DifficultData"],"types":["system"],"state":"metadata","badge":"列表显示信息","description":"s.sd 中各手动槽位的难度摘要，供读档列表显示；实际难度读取进度文件中的难度字段。保存该槽位时重新生成此摘要。"},
+      {"path":["TotalPlayTimeData"],"types":["system"],"state":"metadata","badge":"列表显示信息","description":"s.sd 中各手动槽位的游玩时间摘要，供读档列表显示；实际累计游玩时间来自进度文件的历史统计。保存该槽位时重新生成此摘要。"},
+      {"path":["GameStateData","value","CurrentStageType"],"types":["manual"],"state":"reset","badge":"读档时覆盖","description":"进度载入后，原版无条件将当前场景改为公寓。修改存档里的场景不能让角色在该地图恢复。"},
+      {"path":["GameStateData","value","ActiveDroneMissionId"],"types":["manual"],"state":"reset","badge":"读档时覆盖","description":"载入任意进度存档后，当前无人机任务会被取消并重置为未接取；修改存档中的任务编号不能直接恢复正在进行的无人机任务。"},
+      {"path":["GameStateData","value","ActiveDroneProgress"],"types":["manual"],"state":"reset","badge":"读档时覆盖","description":"载入任意进度存档后，当前无人机任务进度会重置为零。历史完成次数和历史最高倍率是其他字段，不随这一步清空。"},
+      {"path":["OptionData","value","MissionPanel"],"types":["system"],"state":"reset","badge":"进度读档时开启","description":"此设置从 s.sd 载入，但进入任意进度存档时，任务面板会被强制开启。将系统存档中的值设为关闭，不能保证进入游戏后仍保持关闭。"},
+      {"path":["GameStateData","value","PlayerMental"],"types":["manual"],"state":"reset","badge":"公寓初始化恢复","description":"存档值会被读取，但正常读档进入公寓后，初始化回调会把精神恢复到当前上限。因此将这个存档值调低，不能保证进入游戏后维持较低精神。"},
+      {"path":["GameStateData","value","PlayerPosition"],"types":["manual"],"state":"conditional","badge":"受场景初始化影响","description":"坐标在当前场景与载入后的场景一致时用于定位。普通读档已将场景重置为公寓，不能靠外出地图坐标和场景字段恢复外出现场。"},
+      {"path":["GameStateData","value","PlayerRotation"],"types":["manual"],"state":"conditional","badge":"受场景初始化影响","description":"朝向与位置一起在场景匹配时恢复；普通读档固定回公寓。"},
+      {"path":["GameStateData","value","ItemDict","10000"],"types":["manual"],"state":"conditional","badge":"读档可能自动补齐","description":"拥有对应可遥控道具而缺少此遥控器时，读档会补一个。仅删除遥控器数量，可能在下次读档时被重新补回。"},
+      {"path":["GameStateData","value","ItemDict","10001"],"types":["manual"],"state":"conditional","badge":"读档可能自动补齐","description":"拥有对应振动道具而缺少此遥控器时，读档会补一个。仅删除遥控器数量，可能在下次读档时被重新补回。"},
+      {"path":["GameStateData","value","PlayerEcstasy"],"types":["manual"],"state":"conditional","badge":"游戏保存时限幅","description":"进度载入会读取此值。原版游戏保存时会把不低于 0.99 的值限制到 0.99；这是游戏保存行为，编辑器不会替你将所有字段按运行时规则重算。"},
+      {"path":["GameStateData","value","DifficultType"],"types":["manual"],"description":"这是进度文件中的实际游戏难度；s.sd 的难度表只是读档列表摘要，修改摘要不会替代本字段。"},
+      {"path":["GameStateData","value","StatistisTotalPlayTime"],"types":["manual"],"description":"这是进度文件中的累计游玩时间；s.sd 的游玩时间表是对应槽位的列表摘要，保存该槽位时会从这里更新。"},
+      {"path":["GameStateData","value","CurrentRp"],"types":["manual"],"description":"当前可消费的 RP，与露出经验和累计获得 RP 分开记录。"},
+      {"path":["GameStateData","value","ExposeExp"],"types":["manual"],"description":"角色等级由露出经验决定，与当前可消费的 RP 分开记录。"}
     ]
   }
 }

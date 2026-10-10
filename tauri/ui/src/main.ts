@@ -10,6 +10,7 @@ const app=document.querySelector<HTMLDivElement>('#app')!;
 let metadata:Metadata,sem:Semantics,snapshot:Snapshot|null=null,nodes=new Map<string,SaveNode>();
 let active='basic',query='',selected:string|null=null,expanded=new Set<string>(),showRaw=false,busy=false,draft='',draftInitial='',lastSaved=false,persisting=false;
 const rawOpenPaths=new Set<string>();
+const openFoldedCategories=new Set<string>();
 const categoryIcons:Record<string,string>={basic:'grid',player:'person',tasks:'book',inventory:'box',growth:'spark',world:'map',statistics:'chart',character:'person',settings:'sliders',other:'folder'};
 app.innerHTML=`<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-icon">${svg('sliders')}</div><div class="brand-name">SecretFlasherManaka<span>存档编辑器</span></div></div><div class="nav-label">存档内容</div><nav id="categories"></nav><div class="nav-label advanced-label">高级</div><button class="nav-item raw-nav" data-category="raw">${svg('book')}<span>完整原始结构</span></button><div class="sidebar-bottom"><span class="status-dot"></span>本地运行 · 存档编辑<small>存档数据不会上传</small></div></aside><main class="workspace"><header class="topbar"><div><span class="eyebrow">SAVE EDITOR</span><h1>存档管理与编辑</h1><p>读取完整存档，按原版名称编辑。</p></div><div class="header-actions"><button class="button secondary" id="open">${svg('folder')}打开存档</button><button class="button secondary" id="save-as">${svg('folder')}另存为</button><button class="button primary" id="save">${svg('save')}保存</button></div></header><section id="source" class="source-card"></section><div id="notice" class="notice" role="status" hidden></div><section class="content-card"><div class="content-toolbar"><div><h2 id="category-title"></h2><span id="category-summary"></span></div><div class="table-actions"><label class="search">${svg('search')}<input id="search" placeholder="搜索字段、物品或当前值" spellcheck="false"><button id="clear-search" title="清除搜索" hidden>×</button></label><button id="undo" class="icon-button" title="撤销上一步">${svg('undo')}</button><button id="changes" class="button subtle">改动 <span id="change-count">0</span></button></div></div><div class="editor-layout"><section class="data-pane"><div class="table-heading"><span>存档内容</span><span>当前值</span></div><div id="data-list" class="data-list"></div><div class="table-footer"><label><input type="checkbox" id="show-raw">显示原始字段与编号</label><button id="reset" class="text-button">还原全部修改</button></div></section><aside id="details" class="details-pane"></aside></div></section><footer class="page-footer"><span id="footer-state"></span><span>原版数据结构 · 加密后自动校验</span></footer></main></div><div id="modal-root"></div>`;
 const el=<T extends HTMLElement=HTMLElement>(id:string)=>document.getElementById(id) as T;
@@ -17,7 +18,7 @@ document.querySelector('.topbar h1')!.textContent='存档管理与编辑';
 function notice(text:string,error=false) {const target=el('notice');target.hidden=!text;target.classList.toggle('error',error);target.textContent=text;}
 function updateSnapshot(next:Snapshot) {
   snapshot=next;nodes=new Map(next.nodes.map(n=>[pathKey(n.path),n]));
-  if(selected&&!nodes.has(selected)) selected=null;
+  if(selected&&(!nodes.has(selected)||!sem.isVisible(nodes.get(selected)!.path,nodes))) selected=null;
   if(!selected) {const first=next.nodes.find(n=>pathKey(n.path)===pathKey(['GameStateData','value','CurrentRp']));if(first)selected=pathKey(first.path);}
   if(selected){const n=nodes.get(selected)!;draft=n.kind==='string'?String(n.value??''):n.raw;draftInitial=draft;}
   lastSaved=false;render();
@@ -33,9 +34,10 @@ function rootFields():{path:SavePath;category:string;title?:string}[] {
   if(!snapshot)return [];
   const result:{path:SavePath;category:string;title?:string}[]=[];
   const game=nodes.get(pathKey(['GameStateData','value']));
-  if(game)for(const key of game.children) result.push({path:[...game.path,key],category:sem.category(String(key))});
+  if(game)for(const key of game.children) {const path=[...game.path,key];if(sem.isVisible(path,nodes))result.push({path,category:sem.category(String(key))});}
   const root=nodes.get(pathKey([]));
   for(const key of root?.children??[]) {
+    if(!sem.isVisible([key],nodes))continue;
     if(key==='GameStateData'&&game)continue;
     const rawPath=[key];const wrapped=[key,'value'];const path=nodes.has(pathKey(wrapped))?wrapped:rawPath;
     result.push({path,category:key==='PlayerCustomData'?'character':['OptionData','TutorialData'].includes(String(key))?'settings':'other',title:metadata.labels[String(key)]??String(key)});
@@ -43,7 +45,12 @@ function rootFields():{path:SavePath;category:string;title?:string}[] {
   const priority:Record<string,number>={CurrentRp:0,ExposeExp:1,CurrentEarnThisTimeRp:2,DifficultType:3};
   return result.sort((a,b)=>(priority[String(a.path.at(-1))]??99)-(priority[String(b.path.at(-1))]??99));
 }
+function categoryFields(id:string,fields=rootFields()):ReturnType<typeof rootFields> {
+  if(id!=='common')return fields.filter(field=>field.category===id);
+  return (metadata.commonFields??[]).flatMap(name=>fields.filter(field=>field.path.length===3&&field.path[0]==='GameStateData'&&field.path[1]==='value'&&field.path[2]===name));
+}
 function matching(path:SavePath,memo:Map<string,boolean>):boolean {
+  if(!sem.isVisible(path,nodes))return false;
   const id=pathKey(path);if(memo.has(id))return memo.get(id)!;
   const n=nodes.get(id);if(!n)return false;
   const direct=[sem.name(path),sem.value(n,nodes),showRaw?String(path.at(-1)):''].join(' ').toLowerCase().includes(query.toLowerCase());
@@ -51,37 +58,61 @@ function matching(path:SavePath,memo:Map<string,boolean>):boolean {
 }
 function render() {
   const fields=rootFields();
-  el('categories').innerHTML=Object.entries(metadata.categories).map(([id,title])=>`<button class="nav-item ${active===id&&!query?'active':''}" data-category="${id}">${svg(categoryIcons[id])}<span>${escape(title)}</span>${snapshot?`<small>${fields.filter(f=>f.category===id).length}</small>`:''}</button>`).join('');
+  const categories=Object.entries(metadata.categories).filter(([id])=>!snapshot||categoryFields(id,fields).length>0);
+  if(snapshot&&active!=='raw'&&!categories.some(([id])=>id===active))active=categories[0]?.[0]??'other';
+  const saveType=snapshot?sem.saveType(snapshot):null;
+  el('categories').innerHTML=categories.map(([id,title])=>`<button class="nav-item ${active===id&&!query?'active':''}" data-category="${id}">${svg(categoryIcons[id])}<span>${escape(title)}</span>${snapshot?`<small>${categoryFields(id,fields).length}</small>`:''}</button>`).join('');
   document.querySelector('.raw-nav')!.classList.toggle('active',active==='raw'&&!query);
   el('source').innerHTML=snapshot?`<div class="source-icon">${svg('folder')}</div><div class="source-info"><div><strong>${escape(snapshot.source.split(/[\\/]/).at(-1))}</strong><span class="pill ${snapshot.identityError?'edited':''}" title="${escape(snapshot.identityError??'存档 ID 校验通过')}">${escape(snapshot.identity.label)}${snapshot.identityError?' · 校验未通过':''}</span>${snapshot.dirty?'<span class="pill edited">有暂存修改</span>':''}</div><p title="${escape(snapshot.source)}">${escape(snapshot.source)}</p></div><div class="source-meta"><strong>${snapshot.nodeCount.toLocaleString()}</strong><span>完整数据节点</span></div><div class="source-meta"><strong>${snapshot.changedEntries.length}</strong><span>暂存改动</span></div>`:`<div class="source-icon">${svg('folder')}</div><div class="source-info"><strong>从一个存档开始</strong><p>打开 .sd 存档，编辑后保存；也可以另存到其他位置。</p></div><span class="pill neutral">等待打开</span>`;
   el('category-title').textContent=query?'搜索结果':active==='raw'?'完整原始结构':metadata.categories[active];
+  if(saveType){const tag=document.createElement('span');tag.className='pill neutral';tag.textContent=saveType.label;tag.title='按存档内容和文件名识别';el('source').querySelector('.source-info>div')?.append(tag);}
   el('category-summary').textContent=query?'搜索全部分类中的名称与当前值':active==='raw'?'包含类型信息、未知字段与其他插件数据':'选择条目，查看并编辑完整内容';
   const rows:string[]=[],memo=new Map<string,boolean>();
   function row(path:SavePath,depth:number,title?:string) {
+    if(!sem.isVisible(path,nodes))return;
     const n=nodes.get(pathKey(path));if(!n)return;
     if(query&&!matching(path,memo))return;
     const id=pathKey(path),container=n.kind==='object'||n.kind==='array',opened=expanded.has(id)||!!query;
-    rows.push(`<button class="data-row ${id===selected?'selected':''}" data-path="${escape(id)}" style="--depth:${depth}"><span class="row-name">${container?`<span class="expander ${opened?'expanded':''}" data-expand="${escape(id)}">${svg('chevron')}</span>`:'<span class="leaf-dot"></span>'}<span>${escape(title??sem.name(path))}${showRaw&&path.length?`<small>${escape(path.at(-1))}</small>`:''}</span></span><span class="row-value ${container?'container-value':''}" title="${escape(sem.value(n,nodes))}">${escape(sem.value(n,nodes))}</span></button>`);
+    const scope=snapshot?sem.scope(path,snapshot):null;
+    rows.push(`<button class="data-row ${id===selected?'selected':''}" data-path="${escape(id)}" style="--depth:${depth}"><span class="row-name">${container?`<span class="expander ${opened?'expanded':''}" data-expand="${escape(id)}">${svg('chevron')}</span>`:'<span class="leaf-dot"></span>'}<span>${escape(title??sem.name(path))}${scope?.badge?`<span class="scope-badge ${escape(scope.state)}" title="${escape(scope.description)}">${escape(scope.badge)}</span>`:''}${showRaw&&path.length?`<small>${escape(path.at(-1))}</small>`:''}</span></span><span class="row-value ${container?'container-value':''}" title="${escape(sem.value(n,nodes))}">${escape(sem.value(n,nodes))}</span></button>`);
     if(container&&opened)for(const key of n.children)row([...path,key],depth+1);
   }
-  if(snapshot) {if(active==='raw'&&!query)row([],0);else for(const field of fields)if(query||field.category===active)row(field.path,0,field.title);}
+  if(snapshot) {
+    if(active==='raw'&&!query)row([],0);
+    else {
+      const current=query?fields:categoryFields(active,fields);
+      for(const field of current)if(query||!sem.isFolded(field.path))row(field.path,0,field.title);
+      if(!query) {
+        const folded=current.filter(field=>sem.isFolded(field.path));
+        if(folded.length) {
+          const start=rows.length;
+          for(const field of folded)row(field.path,0,field.title);
+          const contents=rows.splice(start).join('');
+          rows.push(`<details class="folded-fields" data-folded-category="${escape(active)}" ${openFoldedCategories.has(active)?'open':''}><summary>${svg('chevron')}<span>${active==='tasks'?'分地图详细记录':active==='settings'?'设置与教程记录':'游戏内可调整的内容'}</span><small>${folded.length} 项</small></summary>${contents}</details>`);
+        }
+      }
+    }
+  }
   el('data-list').innerHTML=rows.join('')||`<div class="empty-state">${svg(query?'search':'book')}<h3>${query?'没有找到匹配内容':snapshot?'这个分类暂无内容':'尚未打开存档'}</h3><p>${query?'试试原版物品名、任务关键词或当前值。':snapshot?'其他分类与完整原始结构仍可查看。':'点击右上角“打开存档”开始编辑。'}</p></div>`;
+  el('data-list').querySelectorAll<HTMLDetailsElement>('[data-folded-category]').forEach(group=>{group.ontoggle=()=>{const category=group.dataset.foldedCategory!;group.open?openFoldedCategories.add(category):openFoldedCategories.delete(category);};});
   el('change-count').textContent=String(snapshot?.changedEntries.length??0);
   el('footer-state').innerHTML=snapshot?`${svg('check')} ${lastSaved?'已保存，加密校验通过':snapshot.dirty?'修改已暂存，尚未保存':'完整读取，尚无改动'}`:`${svg('check')} 就绪`;
   renderDetails();updateButtons();
 }
 function renderDetails() {
-  const node=selected?nodes.get(selected):null;
+  const node=selected&&sem.isVisible(nodes.get(selected)?.path??[],nodes)?nodes.get(selected):null;
   if(!node){el('details').innerHTML=`<div class="detail-empty">${svg('sliders')}<h3>选择一个条目</h3><p>字段解释、当前值与编辑选项<br>会显示在这里。</p></div>`;return;}
-  const choices=sem.choices(node,nodes),container=node.kind==='array'||node.kind==='object';
+  const choices=sem.choices(node,nodes),container=node.kind==='array'||node.kind==='object',skillRange=sem.skillRange(node.path);
   const typeNames={object:'数据表',array:'列表',number:'数值',bool:'开关',string:'文本',null:'空值'};
   let control='';
-  if(choices.length) control=`<label class="field-label" for="value-choice">${node.kind==='bool'?'状态':'选择内容'}</label><select id="value-choice">${!choices.some(c=>c.raw===draft.trim())?'<option value="" selected disabled>使用下方原始输入</option>':''}${choices.map(c=>`<option value="${escape(c.raw)}" ${c.raw===draft.trim()?'selected':''}>${escape(c.name)}</option>`).join('')}</select><p class="input-help">按名称选择，保存时沿用原版数据格式。</p>`;
+  if(choices.length) control=`<label class="field-label" for="value-choice">${node.kind==='bool'?'状态':'选择内容'}</label><select id="value-choice">${!choices.some(c=>c.raw===draft.trim())?`<option value="" selected disabled>${skillRange?'当前值超出范围，请选择合法等级':'使用下方原始输入'}</option>`:''}${choices.map(c=>`<option value="${escape(c.raw)}" ${c.raw===draft.trim()?'selected':''}>${escape(c.name)}</option>`).join('')}</select><p class="input-help">${skillRange?`原版范围：${skillRange.min}～${skillRange.max} 级；0 级表示未学习。`:"按名称选择，保存时沿用原版数据格式。"}</p>`;
   else if(!container) control=`<label class="field-label" for="value-input">${node.kind==='string'?'文本内容':'修改当前值'}</label>${node.kind==='string'?`<textarea id="value-input" class="text-input" spellcheck="false">${escape(draft)}</textarea>`:`<input id="value-input" class="text-input" spellcheck="false" value="${escape(draft)}">`}<p class="input-help">${node.kind==='string'?'直接填写文字，无需添加引号。':'填写数值；保留原始小数精度。'}</p>`;
   else control=`<div class="container-note">${svg('book')}<p>展开左侧列表逐项修改。<br>也可以新增条目，或在下方编辑完整片段。</p></div>`;
   el('details').innerHTML=`<div class="detail-header"><span class="eyebrow">${typeNames[node.kind]}</span><h3>${escape(sem.name(node.path))}</h3><p class="breadcrumb">${escape(sem.breadcrumbs(node.path))}</p></div><div class="current-value"><span>当前值</span><strong>${escape(sem.value(node,nodes))}</strong></div><div class="edit-control">${control}</div>${choices.length||container?`<details class="raw-editor"><summary>编辑原始${container?'片段':'数值'}</summary><textarea id="raw-input" spellcheck="false">${escape(draft)}</textarea><p class="input-help">${container?'保留原版对象、列表结构和数字字典键。':'名称对应的原版编号；未知值仍可手动修改。'}</p></details>`:''}<button class="button primary apply-button" id="apply">${svg('check')}暂存修改</button><div class="detail-secondary">${container?`<button id="add" class="button secondary">${svg('plus')}新增条目</button>`:''}${node.path.length?'<button id="delete" class="text-button danger">删除选中项</button>':''}</div><div class="detail-tip">${svg('save')}<p>修改保留在工具中。<br>完成后点击“保存”或“另存为”。</p></div>${showRaw?`<div class="raw-path">${escape('$'+node.path.map(k=>`[${JSON.stringify(k)}]`).join(''))}</div>`:''}`;
   const input=el<HTMLInputElement|HTMLTextAreaElement>('value-input'),raw=el<HTMLTextAreaElement>('raw-input'),choice=el<HTMLSelectElement>('value-choice');
   const rawDetails=el('details').querySelector<HTMLDetailsElement>('.raw-editor');
+  const scope=snapshot?sem.scope(node.path,snapshot):null;
+  if(scope){const info=document.createElement('section');info.className=`field-scope ${scope.state}`;info.dataset.scopeState=scope.state;info.innerHTML=`<p>${escape(scope.description)}</p>`;el('details').querySelector('.detail-header')?.after(info);}
   if(rawDetails){rawDetails.open=rawOpenPaths.has(pathKey(node.path));rawDetails.ontoggle=()=>{rawDetails.open?rawOpenPaths.add(pathKey(node.path)):rawOpenPaths.delete(pathKey(node.path));};}
   if(input)input.oninput=()=>{draft=input.value;updateButtons();};
   if(raw)raw.oninput=()=>{draft=raw.value;updateButtons();};
@@ -95,7 +126,7 @@ function showModal(content:string,wide=false){el('modal-root').innerHTML=`<div c
 function closeModal(){el('modal-root').innerHTML='';}
 async function allowDraftChange(){return draft===draftInitial||await confirmDialog('有尚未暂存的输入','切换条目会丢弃当前输入。先暂存修改，或继续切换。','继续切换');}
 function selectPath(path:SavePath){selected=pathKey(path);const node=nodes.get(selected)!;draft=node.kind==='string'?String(node.value??''):node.raw;draftInitial=draft;}
-async function applySelected(){if(!selected)return;const node=nodes.get(selected)!;const fragment=node.kind==='string'?JSON.stringify(draft):draft;await action(()=>invoke<Snapshot>('replace_value',{path:node.path,fragment}));}
+async function applySelected(){if(!selected)return;const node=nodes.get(selected)!;const fragment=node.kind==='string'?JSON.stringify(draft):draft;const error=sem.editError(node.path,fragment,node.raw);if(error){notice(error,true);return;}await action(()=>invoke<Snapshot>('replace_value',{path:node.path,fragment}));}
 async function deleteSelected(){if(!selected)return;const node=nodes.get(selected)!;if(!await confirmDialog('删除这个条目？',sem.breadcrumbs(node.path),'暂存删除'))return;await action(()=>invoke<Snapshot>('delete_entry',{path:node.path}));}
 function addDialog(node:SaveNode){
   const keyTable=metadata.rules.keyTables[String(node.path.at(-1))],known=sem.table(keyTable);
@@ -114,11 +145,11 @@ function changesDialog(){
 }
 document.addEventListener('click',async event=>{
   const target=event.target as HTMLElement;
-  const category=target.closest<HTMLButtonElement>('[data-category]');if(category){if(!await allowDraftChange())return;active=category.dataset.category!;query='';el<HTMLInputElement>('search').value='';el('clear-search').hidden=true;const first=active==='raw'?nodes.get(pathKey([])):rootFields().find(f=>f.category===active);if(first)selectPath(first.path);else selected=null;render();return;}
+  const category=target.closest<HTMLButtonElement>('[data-category]');if(category){if(!await allowDraftChange())return;active=category.dataset.category!;query='';el<HTMLInputElement>('search').value='';el('clear-search').hidden=true;const first=active==='raw'?nodes.get(pathKey([])):categoryFields(active).find(f=>(!sem.isFolded(f.path)||openFoldedCategories.has(active)));if(first)selectPath(first.path);else selected=null;render();return;}
   const expand=target.closest<HTMLElement>('[data-expand]');if(expand){const id=expand.dataset.expand!;expanded.has(id)?expanded.delete(id):expanded.add(id);render();return;}
   const row=target.closest<HTMLButtonElement>('[data-path]');if(row){if(!await allowDraftChange())return;selected=row.dataset.path!;const node=nodes.get(selected)!;draft=node.kind==='string'?String(node.value??''):node.raw;draftInitial=draft;render();}
 });
-el('open').onclick=async()=>{if(((snapshot?.dirty)||draft!==draftInitial)&&!await confirmDialog('打开其他存档？','尚未保存的修改或输入会被丢弃。','打开其他存档'))return;const next=await action(()=>invoke<Snapshot|null>('open_document'));if(next){active='basic';expanded.clear();rawOpenPaths.clear();selected=null;updateSnapshot(next);}};
+el('open').onclick=async()=>{if(((snapshot?.dirty)||draft!==draftInitial)&&!await confirmDialog('打开其他存档？','尚未保存的修改或输入会被丢弃。','打开其他存档'))return;const next=await action(()=>invoke<Snapshot|null>('open_document'));if(next){active='basic';expanded.clear();rawOpenPaths.clear();openFoldedCategories.clear();selected=null;updateSnapshot(next);}};
 interface SavePlan {token:string;destination:string;exists:boolean;identity:{label:string};changedCount:number}
 async function persist(asNew:boolean) {
   if(persisting||busy||!snapshot)return;
