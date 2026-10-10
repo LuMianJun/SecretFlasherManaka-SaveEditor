@@ -448,7 +448,7 @@ fn identity(root: &Node) -> Result<SaveIdentity> {
             label: if slot < 0 {
                 "进度存档 · 未分配手动槽位".into()
             } else {
-                format!("进度存档 · 槽位 {}（ID {}）", slot + 1, slot)
+                format!("进度存档 · 槽位 {}", slot + 1)
             },
         })
     } else {
@@ -490,16 +490,6 @@ fn validate_destination(id: &SaveIdentity, path: &Path) -> Result<()> {
         if id.kind != "system" {
             return Err("s.sd 只能保存系统存档，不能写入进度存档".into());
         }
-    } else if stem == "i"
-        || stem == "h"
-        || (stem.starts_with('a') && stem[1..].parse::<u32>().is_ok())
-    {
-        if id.kind != "progress" {
-            return Err("自动、中断、回家存档必须是进度存档".into());
-        }
-        if stem.starts_with('a') && !["a0", "a1", "a2"].contains(&stem.as_str()) {
-            return Err("原版自动存档仅有 a0.sd、a1.sd、a2.sd".into());
-        }
     } else if !stem.is_empty() && stem.bytes().all(|b| b.is_ascii_digit()) {
         let slot = stem.parse::<i32>().map_err(|_| "手动存档编号无效")?;
         if !(0..20).contains(&slot) || stem != slot.to_string() {
@@ -507,7 +497,7 @@ fn validate_destination(id: &SaveIdentity, path: &Path) -> Result<()> {
         }
         if id.kind != "progress" || id.slot_index != Some(slot) {
             return Err(format!(
-                "存档 ID 与文件名不一致：{} 要求 ID {}。请修改槽位编号或选择对应文件名。",
+                "存档 ID 与文件名不一致：{} 要求 ID {}。保存到该槽位时会自动匹配编号。",
                 path.file_name().unwrap_or_default().to_string_lossy(),
                 slot
             ));
@@ -711,9 +701,35 @@ impl Document {
         }
         Ok(())
     }
+    // Prepare the target slot without changing the open document or its undo history.
+    // Cancelling a file dialog/confirmation must leave the source identity intact.
+    fn content_for_destination(&self, destination: &Path) -> Result<(String, Node, SaveIdentity)> {
+        let id = identity(&self.root)?;
+        let mut text = self.text.clone();
+        if id.kind == "progress" {
+            let stem = destination
+                .file_stem()
+                .unwrap_or_default()
+                .to_string_lossy();
+            if let Ok(slot) = stem.parse::<i32>() {
+                if (0..20).contains(&slot)
+                    && stem == slot.to_string()
+                    && id.slot_index != Some(slot)
+                {
+                    let node = self
+                        .root
+                        .get(&field_path(&["SaveDataSlotIndex", "value"]))?;
+                    text.replace_range(node.start..node.end, &slot.to_string());
+                }
+            }
+        }
+        let root = parse(&text)?;
+        let id = identity(&root)?;
+        validate_destination(&id, destination)?;
+        Ok((text, root, id))
+    }
     pub fn prepare_save(&self, destination: &Path, password: &str) -> Result<SavePlan> {
         self.verify_source()?;
-        let id = identity(&self.root)?;
         let destination = if destination.exists() {
             destination.canonicalize().map_err(|e| e.to_string())?
         } else {
@@ -731,7 +747,7 @@ impl Document {
                 .map_err(|e| format!("保存目录不可用：{e}"))?;
             parent.join(absolute.file_name().ok_or("文件名无效")?)
         };
-        validate_destination(&id, &destination)?;
+        let (text, root, id) = self.content_for_destination(&destination)?;
         let target_hash = if destination.exists() {
             let target = Document::load(&destination, password)?;
             let target_id = identity(&target.root)?;
@@ -742,6 +758,15 @@ impl Document {
         } else {
             None
         };
+        let mut changes = Vec::new();
+        diff(
+            &self.original_root,
+            &root,
+            &self.original_text,
+            &text,
+            &mut Vec::new(),
+            &mut changes,
+        );
         Ok(SavePlan {
             token: format!("{:032x}", rand::random::<u128>()),
             destination: destination
@@ -751,7 +776,7 @@ impl Document {
                 .into(),
             exists: target_hash.is_some(),
             identity: id,
-            changed_count: self.changes().len(),
+            changed_count: changes.len(),
             target_hash,
             content_hash: digest(&self.bytes()),
         })
@@ -765,7 +790,13 @@ impl Document {
         if current.target_hash != plan.target_hash {
             return Err("确认后目标文件发生变化，请重新保存".into());
         }
-        let bytes = self.bytes();
+        let (text, root, _) = self.content_for_destination(destination)?;
+        let mut bytes = if self.bom {
+            vec![0xef, 0xbb, 0xbf]
+        } else {
+            Vec::new()
+        };
+        bytes.extend(text.as_bytes());
         let cipher = encrypt(&bytes, password, None);
         if decrypt(&cipher, password)? != bytes {
             return Err("加密校验失败，文件未保存".into());
@@ -811,6 +842,8 @@ impl Document {
             .canonicalize()
             .unwrap_or_else(|_| destination.to_path_buf());
         self.original_cipher = cipher;
+        self.text = text;
+        self.root = root;
         self.original_text = self.text.clone();
         self.original_root = self.root.clone();
         self.history.clear();
@@ -967,19 +1000,15 @@ mod tests {
     #[test]
     fn slot_id_filename_and_existing_target_checks() {
         let (mut d, dir) = fixture();
-        assert!(d.prepare_save(&dir.join("1.sd"), "test").is_err());
+        let plan = d.prepare_save(&dir.join("1.sd"), "test").unwrap();
+        assert_eq!(plan.identity.slot_index, Some(1));
+        assert_eq!(plan.changed_count, 1);
+        assert_eq!(d.text, TEXT);
+        assert_eq!(d.snapshot().identity.slot_index, Some(0));
+        assert!(!d.dirty());
         assert!(d.prepare_save(&dir.join("20.sd"), "test").is_err());
         assert!(d.prepare_save(&dir.join("s.sd"), "test").is_err());
-        assert!(d.prepare_save(&dir.join("a3.sd"), "test").is_err());
-        for name in [
-            "0.sd",
-            "a0.sd",
-            "a1.sd",
-            "a2.sd",
-            "i.sd",
-            "h.sd",
-            "backup.sd",
-        ] {
+        for name in ["0.sd", "backup.sd"] {
             assert!(d.prepare_save(&dir.join(name), "test").is_ok());
         }
         let target = dir.join("other.sd");
@@ -1008,6 +1037,51 @@ mod tests {
         fs::remove_dir_all(dir).unwrap();
     }
     #[test]
+    fn save_as_assigns_target_slot_only_after_success() {
+        let (mut d, dir) = fixture();
+        let original_cipher = fs::read(&d.source).unwrap();
+        let source = d.source.clone();
+        d.replace(&path("CurrentRp"), "8").unwrap();
+        let target = dir.join("1.sd");
+        let plan = d.prepare_save(&target, "test").unwrap();
+        assert_eq!(plan.changed_count, 2);
+        assert_eq!(d.snapshot().identity.slot_index, Some(0));
+        let snapshot = d.save(&plan, "test").unwrap();
+        assert_eq!(snapshot.identity.slot_index, Some(1));
+        assert!(!snapshot.dirty);
+        let expected = TEXT
+            .replacen("\"value\":0", "\"value\":1", 1)
+            .replacen("55372", "8", 1);
+        assert_eq!(Document::load(&target, "test").unwrap().text, expected);
+        assert_eq!(d.text, expected);
+        assert_eq!(fs::read(source).unwrap(), original_cipher);
+        assert_eq!(
+            d.prepare_save(&dir.join("named-copy.sd"), "test")
+                .unwrap()
+                .identity
+                .slot_index,
+            Some(1)
+        );
+        fs::remove_dir_all(dir).unwrap();
+    }
+    #[test]
+    fn save_as_can_overwrite_another_valid_slot_and_failure_keeps_identity() {
+        let (mut d, dir) = fixture();
+        let target = dir.join("1.sd");
+        let target_text = TEXT.replacen("\"value\":0", "\"value\":1", 1);
+        fs::write(&target, encrypt(target_text.as_bytes(), "test", None)).unwrap();
+        let plan = d.prepare_save(&target, "test").unwrap();
+        fs::write(&target, b"changed after confirmation").unwrap();
+        assert!(d.save(&plan, "test").is_err());
+        assert_eq!(d.text, TEXT);
+        fs::write(&target, encrypt(target_text.as_bytes(), "test", None)).unwrap();
+        let plan = d.prepare_save(&target, "test").unwrap();
+        d.save(&plan, "test").unwrap();
+        assert_eq!(d.snapshot().identity.slot_index, Some(1));
+        assert_eq!(Document::load(&target, "test").unwrap().text, target_text);
+        fs::remove_dir_all(dir).unwrap();
+    }
+    #[test]
     fn system_save_has_no_progress_id() {
         let (_, dir) = fixture();
         let text = r#"{"OptionData":{"__type":"ExposureUnnoticed2.ObjectUI.OptionMenu.OptionData,Assembly-CSharp","value":{"Language":2}},"TutorialData":{"value":{}}}"#;
@@ -1015,7 +1089,6 @@ mod tests {
         fs::write(&source, encrypt(text.as_bytes(), "test", None)).unwrap();
         let mut d = Document::load(&source, "test").unwrap();
         assert!(d.prepare_save(&dir.join("0.sd"), "test").is_err());
-        assert!(d.prepare_save(&dir.join("h.sd"), "test").is_err());
         let target = dir.join("s.sd");
         let plan = d.prepare_save(&target, "test").unwrap();
         d.save(&plan, "test").unwrap();

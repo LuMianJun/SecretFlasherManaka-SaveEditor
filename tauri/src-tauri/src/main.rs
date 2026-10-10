@@ -121,6 +121,23 @@ fn game_save_directory() -> PathBuf {
         .join("SecretFlasherManaka")
         .join("SaveData")
 }
+fn suggested_save_name(directory: &Path, kind: &str, source: &Path) -> String {
+    if kind == "system" {
+        return "s.sd".into();
+    }
+    (0..20)
+        .map(|slot| format!("{slot}.sd"))
+        .find(|name| !directory.join(name).exists())
+        // All original slots are occupied: keep a valid filename and let the
+        // native save dialog ask before overwriting. Never suggest slot 20.
+        .unwrap_or_else(|| {
+            source
+                .file_name()
+                .unwrap_or_default()
+                .to_string_lossy()
+                .into_owned()
+        })
+}
 fn store_plan(plan: SavePlan, state: &tauri::State<AppState>) -> Result<SavePlan> {
     *state.pending_save.lock().map_err(|_| "保存状态无法读取")? = Some(plan.clone());
     Ok(plan)
@@ -138,17 +155,23 @@ fn prepare_save_as(
     let path = match destination {
         Some(path) => PathBuf::from(path),
         None => {
+            let directory = game_save_directory();
             let filename = with_document(&state, |doc| {
-                Ok(doc
-                    .source
-                    .file_name()
-                    .unwrap_or_default()
-                    .to_string_lossy()
-                    .into_owned())
+                let snapshot = doc.snapshot();
+                if let Some(error) = snapshot.identity_error {
+                    if snapshot.identity.kind == "invalid" {
+                        return Err(error);
+                    }
+                }
+                Ok(suggested_save_name(
+                    &directory,
+                    &snapshot.identity.kind,
+                    &doc.source,
+                ))
             })?;
             match rfd::FileDialog::new()
                 .set_title("SecretFlasherManaka 存档另存为")
-                .set_directory(game_save_directory())
+                .set_directory(directory)
                 .set_file_name(filename)
                 .add_filter("SecretFlasherManaka 存档", &["sd"])
                 .save_file()
@@ -191,6 +214,36 @@ fn option(args: &[String], name: &str) -> Option<String> {
         .position(|x| x == name)
         .and_then(|i| args.get(i + 1))
         .cloned()
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn save_as_suggests_the_smallest_free_original_slot() {
+        let directory = std::env::temp_dir().join(format!(
+            "secretflashermanaka-dialog-{}-{}",
+            std::process::id(),
+            rand::random::<u64>()
+        ));
+        std::fs::create_dir_all(&directory).unwrap();
+        let source = Path::new("original-copy.sd");
+        assert_eq!(suggested_save_name(&directory, "progress", source), "0.sd");
+        for name in ["0.sd", "2.sd", "s.sd", "backup.sd", "20.sd"] {
+            std::fs::write(directory.join(name), b"occupied").unwrap();
+        }
+        assert_eq!(suggested_save_name(&directory, "progress", source), "1.sd");
+        assert_eq!(suggested_save_name(&directory, "system", source), "s.sd");
+        for slot in 0..20 {
+            std::fs::write(directory.join(format!("{slot}.sd")), b"occupied").unwrap();
+        }
+        assert_eq!(
+            suggested_save_name(&directory, "progress", Path::new("3.sd")),
+            "3.sd"
+        );
+        std::fs::remove_dir_all(&directory).unwrap();
+        assert_eq!(suggested_save_name(&directory, "progress", source), "0.sd");
+    }
 }
 fn main() {
     let args: Vec<String> = std::env::args().collect();
