@@ -1,0 +1,2137 @@
+{
+  "reinforce": {
+    "0": "无效果",
+    "1": "快感槽上升量 +3%",
+    "2": "快感槽上升量 +6%",
+    "3": "快感槽上升量 +10%",
+    "4": "快感槽上升量 -3%",
+    "5": "快感槽上升量 -6%",
+    "6": "快感槽上升量 -10%",
+    "7": "任务槽上升量 -1%",
+    "8": "任务槽上升量 -2%",
+    "9": "任务槽上升量 -3%",
+    "10": "露出可疑度 +3%",
+    "11": "露出可疑度 +6%",
+    "12": "露出可疑度 +10%",
+    "13": "露出可疑度 -1%",
+    "14": "露出可疑度 -2%",
+    "15": "露出可疑度 -3%",
+    "16": "慢动作槽消耗量 -3%",
+    "17": "慢动作槽消耗量 -6%",
+    "18": "慢动作槽消耗量 -10%",
+    "19": "慢动作槽消耗量 +3%",
+    "20": "慢动作槽消耗量 +6%",
+    "21": "慢动作槽消耗量 +10%",
+    "22": "体力上限 +6%",
+    "23": "体力上限 +12%",
+    "24": "体力上限 +20%",
+    "25": "体力上限 -6%",
+    "26": "体力上限 -12%",
+    "27": "体力上限 -20%",
+    "28": "冲刺移动速度 +1%",
+    "29": "冲刺移动速度 +2%",
+    "30": "冲刺移动速度 +3%",
+    "31": "冲刺移动速度 -1%",
+    "32": "冲刺移动速度 -2%",
+    "33": "冲刺移动速度 -3%",
+    "34": "体力恢复速度 +3%",
+    "35": "体力恢复速度 +6%",
+    "36": "体力恢复速度 +10%",
+    "37": "体力恢复速度 -3%",
+    "38": "体力恢复速度 -6%",
+    "39": "体力恢复速度 -10%",
+    "40": "脚步声引起的可疑度上升量 -3%",
+    "41": "脚步声引起的可疑度上升量 -6%",
+    "42": "脚步声引起的可疑度上升量 -10%",
+    "43": "脚步声引起的可疑度上升量 +3%",
+    "44": "脚步声引起的可疑度上升量 +6%",
+    "45": "脚步声引起的可疑度上升量 +10%",
+    "46": "手铐解锁速度 +6%",
+    "47": "手铐解锁速度 +12%",
+    "48": "手铐解锁速度 +20%",
+    "49": "手铐解锁速度 -6%",
+    "50": "手铐解锁速度 -12%",
+    "51": "手铐解锁速度 -20%",
+    "52": "RP倍率 -2%",
+    "53": "RP倍率 -3%",
+    "54": "RP倍率 -5%"
+  },
+  "cosplay": {
+    "0": "通用（头部）",
+    "1": "通用（上半身）",
+    "2": "通用（足部）",
+    "3": "通用（阴部）",
+    "10": "魅魔Cosplay",
+    "9": "战术女仆",
+    "12": "忍者",
+    "4": "修女",
+    "13": "兽人Cosplay",
+    "7": "兔女郎",
+    "6": "乳胶马",
+    "14": "连体衣",
+    "5": "看守",
+    "11": "牛娘",
+    "8": "狂野野兽",
+    "15": "西装A",
+    "16": "西装B",
+    "17": "成人毛衣",
+    "18": "羽绒夹克套装",
+    "19": "学生制服A",
+    "20": "学生制服B"
+  },
+  "cosplay_parts": {
+    "0": "面罩",
+    "1": "眼镜",
+    "2": "墨镜",
+    "3": "奶嘴",
+    "4": "警帽",
+    "5": "口枷",
+    "6": "黑条遮挡",
+    "7": "眼罩",
+    "8": "绷带眼罩",
+    "10000": "项圈",
+    "10001": "围巾",
+    "10002": "项圈（性处理用）",
+    "10003": "胸罩",
+    "10004": "蕾丝内裤",
+    "10005": "安全套",
+    "10006": "雨衣",
+    "10007": "毛皮",
+    "10008": "领带",
+    "10009": "变态牌子",
+    "10010": "网眼上衣",
+    "10011": "小学生书包",
+    "10012": "乳贴",
+    "10013": "手套",
+    "10014": "内裤",
+    "10015": "创可贴（乳头）",
+    "10016": "符纸（乳首）",
+    "10017": "绅士之手（胸）",
+    "10018": "十字架乳首环",
+    "10019": "乳首环",
+    "10020": "网眼手套",
+    "10021": "长皮手套",
+    "10022": "长手套",
+    "10023": "吊带比基尼",
+    "10024": "束缚",
+    "10025": "竞技泳衣",
+    "10026": "学生泳衣",
+    "10027": "橡胶紧身衣",
+    "10028": "开洞比基尼胸罩",
+    "10029": "开洞比基尼裤",
+    "10030": "超小比基尼胸罩",
+    "10031": "超小比基尼裤",
+    "10032": "龟甲缚",
+    "20000": "雨靴",
+    "20001": "过膝袜",
+    "20002": "蕾丝丝袜",
+    "20003": "蕾丝丝袜（暗）",
+    "20004": "网眼丝袜",
+    "20005": "细网眼丝袜",
+    "20006": "网眼丝袜（暗）",
+    "20007": "细网眼丝袜（暗）",
+    "20008": "丝袜",
+    "20009": "条纹丝袜",
+    "20010": "高跟鞋",
+    "20011": "运动鞋",
+    "20012": "细高跟鞋",
+    "20013": "吊袜带",
+    "20014": "靴子",
+    "20015": "长筒靴",
+    "20016": "高跟靴",
+    "30000": "前贴",
+    "30001": "肛塞",
+    "30002": "创可贴（阴部）",
+    "30003": "符纸（阴部）",
+    "30004": "绅士之手（阴部）",
+    "30005": "肛珠",
+    "30006": "兔尾塞",
+    "30007": "胡萝卜",
+    "30008": "尾塞",
+    "30009": "发光肛塞",
+    "100000": "角",
+    "100001": "上装",
+    "100002": "翅膀",
+    "100003": "裙子",
+    "100004": "内裤",
+    "100005": "尾巴",
+    "90000": "颈圈",
+    "90001": "连衣裙",
+    "90002": "袖子",
+    "90003": "束缚腰带",
+    "90004": "围裙",
+    "90005": "丝带",
+    "90006": "腿包",
+    "90007": "丝袜",
+    "90008": "脚踝皮带",
+    "90009": "乐福鞋",
+    "120000": "面具",
+    "120001": "面罩",
+    "120002": "袖子",
+    "120003": "上装",
+    "120004": "靴子",
+    "40000": "头纱",
+    "40001": "面纱",
+    "40002": "上装",
+    "40003": "连体衣",
+    "40004": "胸帘",
+    "40005": "颈巾",
+    "40006": "肩部花边",
+    "40007": "臂端花边",
+    "40008": "袜子",
+    "40009": "鞋子",
+    "40010": "内裤",
+    "130000": "猫耳",
+    "130001": "狐耳",
+    "130002": "手套",
+    "130003": "尾巴",
+    "130004": "鞋子",
+    "70000": "兔头",
+    "70001": "上装",
+    "70002": "上半身束缚",
+    "70003": "下半身束缚",
+    "70004": "夹克",
+    "70005": "乳贴",
+    "70006": "袜子",
+    "70007": "鞋子",
+    "60000": "耳朵",
+    "60001": "全罩面具",
+    "60002": "头部饰品",
+    "60003": "项圈",
+    "60004": "上装",
+    "60005": "乳贴",
+    "60006": "手套",
+    "60007": "臀带",
+    "60008": "尾巴",
+    "60009": "靴子",
+    "140000": "西装",
+    "140001": "靴子",
+    "50000": "鸭舌帽",
+    "50001": "夹克",
+    "50002": "连体衣",
+    "50003": "短裤",
+    "50004": "腿包",
+    "50005": "靴子",
+    "110000": "牛发带",
+    "110001": "铃项圈",
+    "110002": "牛手套",
+    "110003": "牛胸罩",
+    "110004": "牛内裤",
+    "110005": "牛尾塞",
+    "110006": "牛靴",
+    "80000": "颈部毛绒",
+    "80001": "腰带",
+    "80002": "乳头毛绒贴",
+    "80003": "手腕毛绒",
+    "80004": "热裤",
+    "80005": "大腿毛绒",
+    "80006": "脚踝毛绒",
+    "150000": "衬衫",
+    "150001": "夹克",
+    "150002": "卡片",
+    "150003": "裙子",
+    "150004": "西装裤",
+    "150005": "内裤",
+    "150006": "丝袜",
+    "150007": "鞋子",
+    "160000": "颈圈",
+    "160001": "夹克",
+    "160002": "上装",
+    "160003": "西装裤",
+    "160004": "鞋子",
+    "170000": "上装",
+    "170001": "内裤",
+    "170002": "护臂套",
+    "170003": "护腿套",
+    "180000": "羽绒夹克",
+    "180001": "针织衫",
+    "180002": "长筒靴",
+    "190000": "丝带",
+    "190001": "领带",
+    "190002": "连帽衫",
+    "190003": "背包",
+    "190004": "衬衫",
+    "190005": "裙子",
+    "190006": "袜子",
+    "190007": "鞋子",
+    "200000": "西服外套",
+    "200001": "冬季衬衫",
+    "200002": "领带",
+    "200003": "冬季开衫",
+    "200004": "裙子",
+    "200005": "包",
+    "200006": "袜子",
+    "200007": "鞋子",
+    "200008": "耳环",
+    "200009": "项链",
+    "200010": "手链",
+    "200011": "夏季衬衫",
+    "200012": "丝带",
+    "200013": "夏季开衫"
+  },
+  "cosplay_part_options": {
+    "0": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "1": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "2": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "3": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "4": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "5": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "6": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "7": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "8": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "10000": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10001": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10002": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10003": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "10004": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "10005": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10006": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "10007": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "10008": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10009": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10010": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "10011": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10012": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10013": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10014": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E"
+      },
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "10015": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10016": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10017": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10018": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10019": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10020": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10021": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "10022": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "10023": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "10024": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10025": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C"
+      },
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "10026": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "10027": {
+      "boolOption1": "材料",
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "10028": {
+      "boolOption1": "拉链",
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10029": {
+      "boolOption1": "拉链",
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "10030": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "10031": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "10032": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "20000": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20001": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "20002": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20003": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20004": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20005": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20006": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20007": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20008": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20009": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20010": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20011": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20012": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20013": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "20014": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20015": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E"
+      },
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "20016": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C"
+      },
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "30000": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "30001": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "30002": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "30003": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "30004": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "30005": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "30006": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "30007": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "30008": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "30009": {
+      "boolOption1": "闪烁",
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "100000": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "100001": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "100002": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "100003": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "100004": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "100005": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "90000": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "90001": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "90002": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "90003": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "90004": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "90005": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "90006": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "90007": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "90008": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "90009": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "120000": {
+      "boolOption1": "位置",
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "120001": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "120002": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "120003": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "120004": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "40000": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "40001": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "40002": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "40003": {
+      "boolOption1": "材料",
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "40004": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "40005": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "40006": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "40007": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "40008": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "40009": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "40010": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "130000": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "130001": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "130002": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "130003": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "130004": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "70000": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "70001": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "70002": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "70003": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "70004": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "70005": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "70006": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "70007": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "60000": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "60001": {
+      "boolOption1": "显示头发",
+      "boolOption2": "眼睛",
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "60002": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "60003": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "60004": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "60005": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "60006": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "60007": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "60008": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "60009": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "140000": {
+      "boolOption1": "拉链",
+      "materialLabel": "形状",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E",
+        "5": "F"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "140001": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "50000": {
+      "boolOption1": "材料",
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "50001": {
+      "boolOption1": "材料",
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "50002": {
+      "boolOption1": "材料",
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "50003": {
+      "boolOption1": "材料",
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "50004": {
+      "boolOption1": "材料",
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "50005": {
+      "boolOption1": "材料",
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "110000": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "110001": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "110002": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "110003": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "110004": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "110005": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "110006": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "80000": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "80001": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "80002": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "80003": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "80004": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "80005": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "80006": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "150000": {
+      "boolOption1": "按钮开/关",
+      "boolOption2": "衬衫扎进裤子",
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "150001": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "150002": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "150003": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "150004": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "150005": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "150006": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "150007": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "160000": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "160001": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "160002": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "160003": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "160004": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "170000": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "170001": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "170002": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "170003": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "180000": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "180001": {
+      "boolOption1": "中心删除",
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "180002": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "190000": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "190001": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "190002": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "190003": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "190004": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "190005": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B",
+        "2": "C",
+        "3": "D",
+        "4": "E"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "190006": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "190007": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "200000": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "200001": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "200002": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "200003": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "200004": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "200005": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "200006": {
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    },
+    "200007": {
+      "canChangeColor": false,
+      "canChangeInvisible": false
+    },
+    "200008": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "200009": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "200010": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "200011": {
+      "canChangeColor": true,
+      "canChangeInvisible": false
+    },
+    "200012": {
+      "canChangeColor": false,
+      "canChangeInvisible": true
+    },
+    "200013": {
+      "materialLabel": "样式",
+      "materialIndex": {
+        "0": "A",
+        "1": "B"
+      },
+      "canChangeColor": true,
+      "canChangeInvisible": true
+    }
+  },
+  "items": {
+    "10002": "无人机",
+    "99999": "调试：获得 100 RP",
+    "100000": "调试：精神值",
+    "100001": "调试：获得 10000 RP",
+    "100002": "调试：获得 1000 等级经验",
+    "100003": "调试：获得 100 等级经验",
+    "0": "水",
+    "1": "假阳具",
+    "3": "扶他药",
+    "4": "解除扶他药",
+    "5": "身体彩绘套装",
+    "8": "身体彩绘套装（无限）",
+    "9": "身体彩绘清洁套件",
+    "2": "透明化药水",
+    "6": "现形药水",
+    "7": "透明化药水（无限）",
+    "10001": "震动器开关",
+    "10000": "手铐钥匙"
+  },
+  "goods": {
+    "1": "振动棒",
+    "6": "乳首转子",
+    "7": "阴蒂转子",
+    "3": "手铐",
+    "4": "钥匙手铐",
+    "5": "计时手铐",
+    "2": "眼罩",
+    "8": "阴茎活塞机",
+    "9": "肛门活塞机",
+    "10": "阴道活塞机"
+  },
+  "skills": {
+    "11": "服装装备上限提升",
+    "7": "NPC方向显示",
+    "6": "慢动作",
+    "9": "自动慢动作",
+    "12": "啊，我完了。",
+    "23": "尿频",
+    "15": "透视",
+    "19": "随处都穿私服",
+    "24": "装备与强化效果无效",
+    "18": "行走者",
+    "5": "任务中断不可",
+    "10": "第一人称视角锁定",
+    "20": "固定第三人称视角",
+    "13": "硬核模式",
+    "17": "时间停止",
+    "10004": "开腿口交",
+    "10007": "I字劈叉平衡",
+    "10005": "土下座",
+    "10002": "扭动屁股",
+    "10010": "手遮胸",
+    "10001": "阿嘿颜双V",
+    "10003": "外八四足爬姿",
+    "10000": "叉腿走路",
+    "10006": "丁丁",
+    "10017": "仰卧单腿抬起",
+    "10008": "露腋蹲姿",
+    "10021": "高叉姿势",
+    "10020": "摆动腰部",
+    "10016": "自慰",
+    "10009": "三足自慰",
+    "10015": "仰卧自慰",
+    "10014": "狗爬式自慰",
+    "10013": "玩弄乳头",
+    "10018": "玩弄阴蒂",
+    "10019": "撸管",
+    "10011": "开腿小便",
+    "10022": "站立小便",
+    "10012": "狗撒尿",
+    "21": "想被看见欲望",
+    "22": "诱惑"
+  },
+  "costumes": {
+    "0": "鞋子",
+    "4": "比基尼胸罩",
+    "3": "胸罩",
+    "5": "手套",
+    "1": "内裤",
+    "6": "丝袜",
+    "7": "肛塞"
+  },
+  "clothes": {
+    "0": "外套",
+    "1": "连帽衫",
+    "-1": "裸身"
+  },
+  "hair": {
+    "0": "短发",
+    "9": "围巾发型",
+    "3": "侧鲍勃",
+    "12": "职场发型",
+    "15": "长发",
+    "14": "蓬松鲍勃",
+    "16": "科技头",
+    "2": "狼尾发",
+    "1": "鲍勃头",
+    "11": "短双马尾",
+    "10": "外翻长发",
+    "8": "马尾",
+    "18": "中发",
+    "6": "优雅长发",
+    "19": "直长发",
+    "13": "中长鲍勃",
+    "17": "波浪马尾",
+    "5": "半双马尾",
+    "7": "公主卷",
+    "20": "波浪长发",
+    "4": "精灵双马尾"
+  },
+  "body_paint": {
+    "8": "身体油",
+    "0": "淫纹",
+    "1": "涂鸦",
+    "2": "纹身（暗）",
+    "3": "纹身（花1）",
+    "4": "纹身（花1）",
+    "5": "纹身（莲花）",
+    "6": "纹身（恶魔）",
+    "7": "纹身（奴隶）",
+    "9": "橡胶紧身衣"
+  },
+  "stages": {
+    "0": "自宅",
+    "10": "住宅区",
+    "14": "综合公园",
+    "6": "便利店",
+    "12": "繁华街",
+    "15": "公寓前",
+    "11": "购物中心",
+    "7": "服装店",
+    "5": "车站前",
+    "9": "自助洗衣店前",
+    "4": "大街",
+    "3": "住宅区",
+    "13": "地下通道"
+  },
+  "missions": {
+    "60000": "在人来人往的地方露出前面",
+    "60001": "在人来人往的地方，在露出或赤裸状态下做姿势动作",
+    "60002": "在人来往的地方露出屁股",
+    "60003": "在人来人往的地方小便",
+    "60004": "在露出状态下位于收银台",
+    "60005": "在人来人往的地方露出上半身",
+    "60006": "在人附近露出",
+    "60007": "被人注视时进行露出",
+    "60008": "在收银台结账时进行露出",
+    "60009": "在他人附近露出并达到高潮",
+    "60010": "展示你的露出部位",
+    "60011": "在人来人往的地方，在露出状态下使用假阳具",
+    "60012": "在露出或赤裸且戴手铐状态下靠近他人",
+    "60013": "在人来人往的地方，在露出或赤裸状态下用手铐把自己与物品铐在一起",
+    "60014": "向他人射精",
+    "60015": "在人来人往的地方脱光衣服",
+    "60016": "在人来人往的地方，赤裸状态下使用假阳具",
+    "60017": "赤裸状态下位于收银台",
+    "60018": "与外套拉开12米距离",
+    "60019": "赤裸状态下保持蹲姿移动7米",
+    "60020": "在人附近脱光衣服",
+    "60021": "展示你的裸身",
+    "70000": "在人来人往的地方露出前面",
+    "70001": "在人来人往的地方，在露出或赤裸状态下做姿势动作",
+    "70002": "在人来往的地方露出屁股",
+    "70003": "在人来人往的地方小便",
+    "70004": "在露出状态下将震动器调至强/随机并移动15米",
+    "70005": "在人来人往的地方露出上半身",
+    "70006": "在人附近露出",
+    "70007": "被人注视时进行露出",
+    "70008": "在他人附近露出并达到高潮",
+    "70009": "展示你的露出部位",
+    "70010": "在人来人往的地方，在露出状态下使用假阳具",
+    "70011": "在露出或赤裸且戴手铐状态下靠近他人",
+    "70012": "在人来人往的地方，在露出或赤裸状态下用手铐把自己与物品铐在一起",
+    "70013": "在露出且戴眼罩的状态下移动15米",
+    "70014": "向他人射精",
+    "70015": "在人来人往的地方脱光衣服",
+    "70016": "在人来人往的地方，赤裸状态下使用假阳具",
+    "70017": "把外套放在试衣间，与外套拉开17米距离",
+    "70018": "在赤裸状态下将震动器调至强/随机并移动15米",
+    "70019": "赤裸状态下保持蹲姿移动10米",
+    "70020": "在人附近脱光衣服",
+    "70021": "在赤裸且戴眼罩的状态下移动15米",
+    "70022": "展示你的裸身",
+    "150000": "在人来人往的地方露出前面",
+    "150001": "在人来人往的地方，在露出或赤裸状态下做姿势动作",
+    "150002": "在人来往的地方露出屁股",
+    "150003": "在人来人往的地方小便",
+    "150004": "在露出状态下将震动器调至强/随机并移动25米",
+    "150005": "在人来人往的地方露出上半身",
+    "150006": "在露出状态下位于入口",
+    "150007": "按门铃后以露出状态在门前等待",
+    "150008": "在人来人往的地方，在露出状态下使用假阳具",
+    "150009": "在他人附近露出并达到高潮",
+    "150010": "在暴露状态下与他人一起乘坐电梯",
+    "150011": "在露出或赤裸且戴手铐状态下靠近他人",
+    "150012": "在人来人往的地方，在露出或赤裸状态下用手铐把自己与物品铐在一起",
+    "150013": "在露出且戴眼罩的状态下移动25米",
+    "150014": "向他人射精",
+    "150015": "在人来人往的地方脱光衣服",
+    "150016": "赤裸状态下位于入口",
+    "150017": "在人来人往的地方，赤裸状态下使用假阳具",
+    "150018": "在赤裸状态下将震动器调至强/随机并移动25米",
+    "150019": "按门铃后赤裸在门前等待",
+    "150020": "在裸体状态下和别人一起乘电梯",
+    "150021": "在赤裸且戴眼罩的状态下移动25米",
+    "150022": "在公寓外放置外套，然后前往顶楼",
+    "150023": "把外套放在电梯外，赤裸地停留在每一层。",
+    "140000": "在人来人往的地方露出前面",
+    "140001": "在人来人往的地方，在露出或赤裸状态下做姿势动作",
+    "140002": "在露出状态下走进光照",
+    "140003": "在露出状态下使用自动售货机",
+    "140004": "在露出状态下坐在椅子上",
+    "140005": "在人来往的地方露出屁股",
+    "140006": "在人来人往的地方小便",
+    "140007": "在露出状态下位于喷泉广场",
+    "140008": "在露出状态下将震动器调至强/随机并移动60米",
+    "140009": "在人来人往的地方露出上半身",
+    "140010": "在人附近露出",
+    "140011": "被人注视时进行露出",
+    "140012": "在他人附近露出并达到高潮",
+    "140013": "展示你的露出部位",
+    "140014": "在人来人往的地方，在露出状态下使用假阳具",
+    "140015": "在露出或赤裸且戴手铐状态下靠近他人",
+    "140016": "在人来人往的地方，在露出或赤裸状态下用手铐把自己与物品铐在一起",
+    "140017": "在露出且戴眼罩的状态下移动60米",
+    "140018": "向他人射精",
+    "140019": "在人来人往的地方脱光衣服",
+    "140020": "赤裸状态下走进光照",
+    "140021": "赤裸状态下使用自动售货机",
+    "140022": "赤裸状态下坐在椅子上",
+    "140023": "赤裸状态下位于喷泉广场",
+    "140024": "在人来人往的地方，赤裸状态下使用假阳具",
+    "140025": "与外套拉开80米距离",
+    "140026": "在赤裸状态下将震动器调至强/随机并移动60米",
+    "140027": "赤裸状态下保持蹲姿移动25米",
+    "140028": "在厕所外放置外套，在隔间里开门待着",
+    "140029": "在人附近脱光衣服",
+    "140030": "展示你的裸身",
+    "140031": "在赤裸且戴眼罩的状态下移动60米",
+    "100000": "在人来人往的地方露出前面",
+    "100001": "在人来人往的地方，在露出或赤裸状态下做姿势动作",
+    "100002": "在露出状态下走进光照",
+    "100003": "在露出状态下使用自动售货机",
+    "100004": "在人来人往的地方小便",
+    "100005": "在人来往的地方露出屁股",
+    "100006": "在露出状态下将震动器调至强/随机并移动50米",
+    "100007": "在人来人往的地方露出上半身",
+    "100008": "在人附近露出",
+    "100009": "被人注视时进行露出",
+    "100010": "按门铃后以露出状态在门前等待",
+    "100011": "在露出状态下位于人行横道",
+    "100012": "在他人附近露出并达到高潮",
+    "100013": "展示你的露出部位",
+    "100014": "在人来人往的地方，在露出状态下使用假阳具",
+    "100015": "在露出或赤裸且戴手铐状态下靠近他人",
+    "100016": "在人来人往的地方，在露出或赤裸状态下用手铐把自己与物品铐在一起",
+    "100017": "在露出且戴眼罩的状态下移动50米",
+    "100018": "向他人射精",
+    "100019": "在人来人往的地方脱光衣服",
+    "100020": "赤裸状态下走进光照",
+    "100021": "赤裸状态下使用自动售货机",
+    "100022": "按门铃后赤裸在门前等待",
+    "100023": "在人来人往的地方，赤裸状态下使用假阳具",
+    "100024": "在赤裸状态下将震动器调至强/随机并移动60米",
+    "100025": "赤裸状态下保持蹲姿移动25米",
+    "100026": "赤裸状态下位于人行横道",
+    "100027": "在人附近脱光衣服",
+    "100028": "展示你的裸身",
+    "100029": "在赤裸且戴眼罩的状态下移动50米",
+    "100030": "与外套拉开90米距离",
+    "110000": "在人来人往的地方露出前面",
+    "110001": "在人来人往的地方，在露出或赤裸状态下做姿势动作",
+    "110002": "在露出状态下使用自动售货机",
+    "110003": "在露出状态下坐在椅子上",
+    "110004": "在人来往的地方露出屁股",
+    "110005": "在人来人往的地方小便",
+    "110006": "在露出状态下将震动器调至强/随机并移动50米",
+    "110007": "在人来人往的地方露出上半身",
+    "110008": "在人附近露出",
+    "110009": "在露出状态下乘坐自动扶梯移动",
+    "110010": "被人注视时进行露出",
+    "110011": "在暴露状态下与他人一起乘坐电梯",
+    "110012": "在他人附近露出并达到高潮",
+    "110013": "展示你的露出部位",
+    "110014": "在人来人往的地方，在露出状态下使用假阳具",
+    "110015": "在露出或赤裸且戴手铐状态下靠近他人",
+    "110016": "在人来人往的地方，在露出或赤裸状态下用手铐把自己与物品铐在一起",
+    "110017": "在露出且戴眼罩的状态下移动40米",
+    "110018": "向他人射精",
+    "110019": "在人来人往的地方脱光衣服",
+    "110020": "赤裸状态下坐在椅子上",
+    "110021": "赤裸状态下使用自动售货机",
+    "110022": "在裸体状态下和别人一起乘电梯",
+    "110023": "在人来人往的地方，赤裸状态下使用假阳具",
+    "110024": "赤裸状态下乘坐自动扶梯移动",
+    "110025": "赤裸状态下保持蹲姿移动25米",
+    "110026": "把外套放在电梯外，然后乘电梯移动",
+    "110027": "展示你的裸身",
+    "110028": "与外套拉开1层距离",
+    "110029": "在人附近脱光衣服",
+    "110030": "在赤裸状态下将震动器调至强/随机并移动60米",
+    "110031": "与外套拉开2层距离",
+    "110032": "与外套拉开100米距离",
+    "110033": "在赤裸且戴眼罩的状态下移动40米",
+    "120000": "在人来人往的地方露出前面",
+    "120001": "在人来人往的地方，在露出或赤裸状态下做姿势动作",
+    "120002": "在露出状态下走进光照",
+    "120003": "在露出状态下使用自动售货机",
+    "120004": "在露出状态下位于人行天桥",
+    "120005": "在人来往的地方露出屁股",
+    "120006": "在人来人往的地方小便",
+    "120007": "在露出状态下将震动器调至强/随机并移动50米",
+    "120008": "在人来人往的地方露出上半身",
+    "120009": "在人附近露出",
+    "120010": "被人注视时进行露出",
+    "120011": "在他人附近露出并达到高潮",
+    "120012": "展示你的露出部位",
+    "120013": "在人来人往的地方，在露出状态下使用假阳具",
+    "120014": "在露出或赤裸且戴手铐状态下靠近他人",
+    "120015": "在人来人往的地方，在露出或赤裸状态下用手铐把自己与物品铐在一起",
+    "120016": "在露出且戴眼罩的状态下移动50米",
+    "120017": "向他人射精",
+    "120018": "在人来人往的地方脱光衣服",
+    "120019": "赤裸状态下走进光照",
+    "120020": "赤裸状态下使用自动售货机",
+    "120021": "在人来人往的地方，赤裸状态下使用假阳具",
+    "120022": "在赤裸状态下将震动器调至强/随机并移动30米",
+    "120023": "赤裸状态下保持蹲姿移动15米",
+    "120024": "把外套放在天桥外，站在天桥上",
+    "120025": "在人附近脱光衣服",
+    "120026": "用洗衣机洗衣服",
+    "120027": "展示你的裸身",
+    "120028": "在赤裸且戴眼罩的状态下移动30米",
+    "120029": "与外套拉开95米距离"
+  },
+  "drone_missions": {
+    "0": "在露出状态下捡起手铐钥匙！",
+    "1": "把外套捡起来！",
+    "2": "在插着震动器并露出的状态下捡起手铐钥匙！",
+    "3": "在随机位置出发，去捡外套！",
+    "4": "在插着震动器的状态下去捡外套！",
+    "5": "在随机位置拾取手铐钥匙和外套！",
+    "6": "在露出状态下寻找手铐钥匙！",
+    "7": "寻找外套！",
+    "8": "插着震动器去寻找外套！",
+    "9": "在随机位置寻找手铐钥匙和外套！",
+    "10": "在戴着眼罩露出的状态下捡起手铐钥匙！",
+    "11": "最后的挑战"
+  },
+  "fast_travel": {
+    "0": "自宅",
+    "1": "住宅区",
+    "2": "综合公园",
+    "3": "便利店",
+    "4": "繁华街",
+    "5": "公寓前",
+    "6": "购物中心",
+    "7": "服装店"
+  },
+  "achievements": {
+    "0": "达成1000RP以上高分",
+    "1": "达成2000RP以上高分",
+    "2": "达成5000RP以上高分",
+    "3": "完成住宅区任务的90%",
+    "4": "完成综合公园任务的90%",
+    "5": "完成便利店任务的90%",
+    "6": "完成繁华街任务的90%",
+    "7": "完成公寓前任务的90%",
+    "8": "完成购物中心任务的90%",
+    "9": "完成服装店任务的90%",
+    "10": "已完成所有任务和无人机任务"
+  },
+  "ring_actions": {
+    "0": "自动奔跑",
+    "1": "追踪",
+    "2": "假阳具",
+    "3": "震动器开关",
+    "4": "手铐",
+    "5": "活塞机开关",
+    "6": "时间停止",
+    "7": "排尿",
+    "8": "开腿口交",
+    "9": "I字劈叉平衡",
+    "10": "土下座",
+    "11": "扭动屁股",
+    "12": "手遮胸",
+    "13": "阿嘿颜双V",
+    "14": "外八四足爬姿",
+    "15": "叉腿走路",
+    "16": "丁丁",
+    "17": "仰卧单腿抬起",
+    "18": "露腋蹲姿",
+    "19": "高叉姿势",
+    "20": "摆动腰部",
+    "21": "自慰",
+    "22": "三足自慰",
+    "23": "仰卧自慰",
+    "24": "狗爬式自慰",
+    "25": "玩弄乳头",
+    "26": "玩弄阴蒂",
+    "27": "撸管",
+    "28": "开腿小便",
+    "29": "站立小便",
+    "30": "狗撒尿"
+  },
+  "skin_colors": {
+    "0": "肤色 #FFFFFF",
+    "1": "肤色 #FFFEEF",
+    "2": "肤色 #FFFCD2",
+    "3": "肤色 #F1DFC9",
+    "4": "肤色 #D9BFA3",
+    "5": "肤色 #E3B194",
+    "6": "肤色 #E2A878",
+    "7": "肤色 #ECAE87",
+    "8": "肤色 #E2AC98",
+    "9": "肤色 #EDB8A1",
+    "10": "肤色 #FBBBA8",
+    "11": "肤色 #CF6458",
+    "12": "肤色 #D78373",
+    "13": "肤色 #D99584",
+    "14": "肤色 #DFAB9B",
+    "15": "肤色 #D6B6A4",
+    "16": "肤色 #CC9FA6",
+    "17": "肤色 #A38B8B",
+    "18": "肤色 #7D6C73"
+  },
+  "custom_missions": {
+    "69001": "在便利店收银台小便",
+    "109100": "未隐身时，夜间在路口露出且未被发现",
+    "109200": "未隐身时，按门铃后，在未被发现时露出并蹲下等待",
+    "149200": "未隐身时，视野受限时，在迷宫内赤裸蹲行12米",
+    "149201": "未隐身时，在公园中央被人注视时，露出并蹲下，保持对方在画面内",
+    "149202": "未隐身时，视野受限时脱下外套并露出，与落地外套拉开18米路线距离",
+    "149203": "未隐身时，在开门厕所内被人注视时保持赤裸，让对方出现在画面内",
+    "69200": "未隐身时，把外套留在至少4米外，脱下外套并露出结账",
+    "69101": "未隐身时，露出且未被发现地累计移动12米",
+    "129200": "未隐身时，夜间在路灯下被人注视时，露出并蹲下等待",
+    "129101": "未隐身时，洗衣效果有效时赤裸累计移动15米",
+    "129201": "未隐身时，洗衣效果有效时，在天桥上赤裸被人注视，让对方出现在画面内",
+    "159200": "未隐身时，视野受限时，与附近路人同在电梯内并露出",
+    "159201": "未隐身时，与附近路人同乘电梯并保持赤裸，到站开门",
+    "159202": "未隐身时，脱下外套，在顶层与落地外套保持至少5米高度差，露出并蹲下",
+    "119200": "未隐身时，视野受限时赤裸乘自动扶梯",
+    "119201": "未隐身时，戴有效手铐且视野受限时，在路人路线内露出并移动12米",
+    "79100": "未隐身时，脱下外套露出且未被发现，与落地外套拉开12米路线距离",
+    "79200": "未隐身时，外套放在试衣间时，脱下外套并在人来人往的地方赤裸蹲行10米",
+    "109101": "未隐身时，按门铃后在门前露出，连续5秒",
+    "149100": "未隐身时，在迷宫内赤裸蹲行18米",
+    "149101": "未隐身时，白天在公园中央露出，连续8秒",
+    "149102": "未隐身时，脱下外套并露出，与落地外套拉开25米路线距离",
+    "149103": "未隐身时，在开门厕所内保持赤裸，连续5秒",
+    "69100": "未隐身时，结账服务有效时露出，连续3秒",
+    "129100": "未隐身时，夜间在路灯下露出，连续6秒",
+    "129102": "未隐身时，视野受限时，在路人路线内露出并移动18米",
+    "159100": "未隐身时，外套落在轿厢外，脱下外套并赤裸乘梯位移8米",
+    "159101": "未隐身时，赤裸乘梯，在2个不同楼层开门",
+    "159102": "未隐身时，赤裸与附近路人同在电梯内，连续4秒",
+    "119100": "未隐身时，赤裸乘自动扶梯，连续3秒",
+    "119101": "未隐身时，戴手铐且状态有效，在他人近旁露出，连续4秒",
+    "79101": "未隐身时，结账服务有效时保持赤裸，连续3秒",
+    "109002": "到住宅区路口停留3秒",
+    "149002": "到公园中央停留3秒",
+    "149003": "进入公园迷宫并停留3秒",
+    "69002": "到便利店收银台停留3秒",
+    "129002": "到繁华街天桥停留3秒",
+    "159002": "到公寓大楼入口停留3秒",
+    "159003": "到公寓大楼顶层停留3秒",
+    "119002": "在购物中心乘自动扶梯累计3秒"
+  },
+  "meta": {
+    "schema": 1,
+    "locale": "sc",
+    "source": "Original AssetStudio master dumps; Unity YAML GUID references for missing dump children; original dictionary sc column",
+    "id_rules": {
+      "reinforce": "MReinforceEffect.records index + 1; 0 = no effect",
+      "cosplay_parts": "RCosplay.Type * 10000 + PartsRecords index",
+      "missions": "MMissionArea.StageType * 10000 + records index",
+      "drone_missions": "MDroneMission.records index",
+      "fast_travel": "MFastTravel.records index",
+      "achievements": "MAchievement.records index"
+    },
+    "counts": {
+      "reinforce": 55,
+      "cosplay": 21,
+      "cosplay_parts": 188,
+      "cosplay_part_options": 188,
+      "items": 18,
+      "goods": 10,
+      "skills": 40,
+      "costumes": 7,
+      "clothes": 3,
+      "hair": 21,
+      "body_paint": 10,
+      "stages": 13,
+      "missions": 196,
+      "drone_missions": 12,
+      "fast_travel": 8,
+      "achievements": 11,
+      "ring_actions": 31,
+      "skin_colors": 19,
+      "custom_missions": 41
+    },
+    "untranslated_literals_or_keys": [],
+    "records_outside_active_master": {
+      "body_paint": [
+        "9"
+      ],
+      "hair": [],
+      "stages": [
+        "5",
+        "9",
+        "4",
+        "3",
+        "13"
+      ]
+    },
+    "literal_translation_overrides": {
+      "ビキニブラ": "比基尼胸罩",
+      "デバッグRP100": "调试：获得 100 RP",
+      "デバッグRP10000": "调试：获得 10000 RP",
+      "デバッグメンタル": "调试：精神值",
+      "デバッグEXP1000": "调试：获得 1000 等级经验",
+      "デバッグEXP100": "调试：获得 100 等级经验",
+      "駅前": "车站前",
+      "コインランドリー前": "自助洗衣店前",
+      "大通り": "大街",
+      "地下通路": "地下通道",
+      "裸": "裸身"
+    },
+    "custom_mission_sources": {
+      "69001": [
+        "D:\\Reverse\\Seleka2\\mod-work\\counter-mission\\Plugin\\TaskCatalog.cs"
+      ],
+      "109100": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "109200": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "149200": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "149201": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "149202": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "149203": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "69200": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "69101": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "129200": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "129101": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "129201": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "159200": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "159201": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "159202": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "119200": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "119201": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "79100": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "79200": [
+        "D:\\Games\\Seleka\\塞雷卡2\\BepInEx\\config\\Seleka2Tasks\\tasks.json"
+      ],
+      "109101": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "149100": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "149101": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "149102": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "149103": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "69100": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "129100": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "129102": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "159100": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "159101": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "159102": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "119100": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "119101": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "79101": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\challenges-before-original-audit-20261010-200141\\tasks.json"
+      ],
+      "109002": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ],
+      "149002": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ],
+      "149003": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ],
+      "69002": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ],
+      "129002": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ],
+      "159002": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ],
+      "159003": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ],
+      "119002": [
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+        "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+      ]
+    },
+    "ambiguous_historical_custom_missions": {
+      "109003": {
+        "白天在住宅区累计走20米，再继续移动3秒": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
+        ],
+        "白天在住宅区累计走20米": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+        ]
+      },
+      "149004": {
+        "白天在公园累计走40米，再继续移动3秒": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
+        ],
+        "白天在公园累计走40米": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+        ]
+      },
+      "129003": {
+        "夜间在繁华街累计走30米，再继续移动3秒": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
+        ],
+        "夜间在繁华街累计走30米": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+        ]
+      },
+      "159004": {
+        "乘电梯在3个不同楼层开门，随后留在轿厢内1秒": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\replaced-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\counter-mission-before-0.3.0-20261010-042524\\tasks.json"
+        ],
+        "乘电梯在3个不同楼层开门": [
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\replaced-game-tasks.json",
+          "D:\\Reverse\\Seleka2\\mod-work\\backups\\tasks-before-challenges-20261010-194453\\source-tasks.json"
+        ]
+      }
+    },
+    "notes": [
+      "shadeColor is a numeric slider, not an enum.",
+      "Material choices A–G come from PartsOptionSetupPanelView.Start.",
+      "Skin colors use MCustomizeColor.SkinPattern.BodyPrimary RGB; eyes use texture palettes, not named color records.",
+      "Names are display-only; saved identifiers remain unchanged."
+    ]
+  }
+}

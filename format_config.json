@@ -1,0 +1,8 @@
+{
+  "game": "SecretFlasherManaka",
+  "password": "unReRU821Drq83",
+  "encryption": "AES-128-CBC",
+  "compression": "None",
+  "pbkdf2": "SHA1",
+  "iterations": 100
+}

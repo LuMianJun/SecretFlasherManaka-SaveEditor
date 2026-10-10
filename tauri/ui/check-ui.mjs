@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import ts from 'typescript';
+const compiled=ts.transpileModule(fs.readFileSync(new URL('./src/semantics.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
+const {Semantics,pathKey}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+const metadata=JSON.parse(fs.readFileSync(new URL('../metadata.json',import.meta.url),'utf8'));
+const sem=new Semantics(metadata),game=['GameStateData','value'];
+const node=(path,raw,kind='number')=>({path,raw,kind,value:kind==='bool'?raw==='true':raw,children:[],bareKeys:[]});
+let count=0;
+function test(name,fn){fn();count++;console.log('PASS '+name);}
+test('Vibration names preserve numeric option values',()=>assert.deepEqual(sem.choices(node([...game,'PlayerVibrationModeType'],'0')),[{raw:'0',name:'关'},{raw:'1',name:'弱'},{raw:'2',name:'强'},{raw:'3',name:'随机'}]));
+test('Strength records use master ID and signed percentage',()=>{assert.equal(sem.value(node([...game,'CosplayPartsReinforceEffectDict','10002',0],'12')),metadata.catalog.reinforce['12']);assert.ok(sem.value(node([...game,'CosplayPartsReinforceEffectDict','10002',0],'12')).endsWith('+10%'));});
+test('Parts dictionary keys are parts, not reinforcement IDs',()=>assert.equal(sem.name([...game,'CosplayPartsReinforceEffectDict','10002']),metadata.catalog.cosplay_parts['10002']));
+test('Item quantities stay quantities',()=>{assert.equal(sem.value(node([...game,'ItemDict','0'],'12')),'12 个');assert.equal(sem.choices(node([...game,'ItemDict','0'],'12')).length,0);});
+test('Keys ending in 100 do not become percent values',()=>assert.equal(sem.value(node([...game,'MissionAchieveCountDict','149100'],'2')),'2 次'));
+test('Nested parts dictionaries use parts names',()=>assert.equal(sem.name([...game,'LoadoutDatas',0,'CosplayPartsOptionDataDict','10002']),metadata.catalog.cosplay_parts['10002']));
+test('History records use original localization',()=>assert.equal(metadata.labels.StatistisEcstasyCount,'高潮次数'));
+test('Unknown enum values remain selectable',()=>assert.equal(sem.choices(node([...game,'PlayerVibrationModeType'],'99')).at(-1).raw,'99'));
+test('Random challenge levels are named',()=>assert.equal(sem.value(node([...game,'RandomMissionClearNumIdDict','6'],'2')),'已通关全部任务'));
+test('Resolution uses stored aspect ratio',()=>{const map=new Map([[pathKey(['OptionData','value','AspectRatioIndex']),node(['OptionData','value','AspectRatioIndex'],'1')]]);assert.equal(sem.value(node(['OptionData','value','Resolusion'],'2'),map),'3440×1440');});
+test('Speed indices show actual multipliers',()=>{assert.equal(sem.value(node([...game,'MotionSpeedScaleIndex'],'-2')),'0.8 倍');assert.equal(sem.value(node([...game,'WalkSpeedScaleIndex'],'3')),'1.15 倍');});
+test('Only first three reinforcement flags are locks',()=>assert.equal(sem.name([...game,'CosplayReinforceLockState','10002',3]),'仅负面效果'));
+test('Dropped dildo instances retain distinct names',()=>assert.equal(sem.value(node([...game,'DropDataDict','10104','ItemType'],'10104')),'壁挂假阳具 5'));
+test('Skin palette and common/pose shortcut actions are named',()=>{assert.ok(sem.value(node(['PlayerCustomData','value','CustomizeSkinColor'],'0')).includes('#'));assert.ok(!/^\d+$/.test(sem.value(node([...game,'RingShortcutModelIndexSkill'],'8'))));});
+test('Ambiguous historical custom task names remain explicit',()=>assert.ok(sem.name([...game,'MissionAchieveCountDict','109003']).includes('歧义')));
+test('Unlocked fast-travel entries use destination names',()=>assert.equal(sem.value(node([...game,'ReleaseFastTravel',0],'3')),'便利店'));
+test('Native normalized mission progress is shown as percentage',()=>assert.equal(sem.value(node([...game,'MissionSatisfyDict','60000'],'0.5')),'50%'));
+console.log(JSON.stringify({passed:count,failed:0,fieldNames:Object.keys(metadata.labels).length,catalogCounts:metadata.catalog.meta.counts}));

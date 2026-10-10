@@ -1,0 +1,61 @@
+{
+  "keyTables": {
+    "CosplayPartsOptionDataDict": "cosplay_parts",
+    "PlayerCosplayPartsDict": "cosplay_parts",
+    "CosplayPartsReinforceEffectDict": "cosplay_parts",
+    "CosplayReinforceLockState": "cosplay_parts",
+    "AdultGoodsReinforceEffectDict": "goods",
+    "AdultGoodsReinforceLockState": "goods",
+    "MAdultGoodsDict": "goods",
+    "CostumeReinforceEffectDict": "costumes",
+    "PlayerCostumeDict": "costumes",
+    "ClothesDict": "clothes",
+    "ItemDict": "items",
+    "SkillLevel": "skills",
+    "PlayerPassiveSkillActiveDict": "skills",
+    "BodyPaintTypeDict": "body_paint",
+    "HairCustomizeDataDict": "hair",
+    "DropDataDict": "drop_items",
+    "DroneMissionAchieveCountDict": "drone_missions",
+    "MissionAchieveCountDict": "missions",
+    "ContinueMissionAchieveCountDict": "missions",
+    "MissionSatisfyDict": "missions",
+    "ContinueMissionSatisfyDict": "missions",
+    "MissionEarnRpDict": "missions",
+    "MissionMaxRpBonus100Dict": "missions",
+    "DroneMissionAchieveCountPerStageDictDict": "stages",
+    "DroneMissionMaxRpBonus100PerStageDictDict": "stages",
+    "RandomMissionClearNumIdDict": "stages"
+  },
+  "valueTables": {
+    "CurrentStageType": "stages",
+    "StageType": "stages",
+    "CurrentHair": "hair",
+    "PlayerCurrentClothes": "clothes",
+    "PlayerCurrentHoldClothes": "clothes",
+    "AttachedHandcuffType": "goods",
+    "ActiveDroneMissionId": "drone_missions",
+    "ItemType": "drop_items"
+  },
+  "listTables": {
+    "HairTypeList": "hair",
+    "CosplayPartsList": "cosplay_parts",
+    "CostumeList": "costumes",
+    "AchievementReceiveSet": "achievements",
+    "DroneManagerDropList": "drop_items",
+    "ReleaseFastTravel": "fast_travel"
+  },
+  "reinforcementTables": [
+    "AdultGoodsReinforceEffectDict",
+    "CosplayPartsReinforceEffectDict",
+    "CostumeReinforceEffectDict"
+  ],
+  "lockTables": [
+    "AdultGoodsReinforceLockState",
+    "CosplayReinforceLockState"
+  ],
+  "stageDroneTables": [
+    "DroneMissionAchieveCountPerStageDictDict",
+    "DroneMissionMaxRpBonus100PerStageDictDict"
+  ]
+}

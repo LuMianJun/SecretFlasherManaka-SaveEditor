@@ -1,0 +1,31 @@
+# Legacy Python build artifacts
+/build/
+/build-spec/
+__pycache__/
+*.pyc
+
+# Local dependencies and generated files
+node_modules/
+target/
+.toolcache/
+/tauri/ui/dist/
+/tauri/src-tauri/gen/
+
+# Saves, local verification output and packaged applications
+*.sd
+*.verification.json
+*.log
+*.exe
+*.zip
+/dist/
+/releases/
+/outputs/
+
+# Local credentials and editor settings
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
