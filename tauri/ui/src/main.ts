@@ -29,7 +29,7 @@ async function action<T>(work:()=>Promise<T>,apply=true):Promise<T|undefined> {
   catch(error){notice(String(error),true);return undefined;}
   finally{busy=false;updateButtons();}
 }
-function updateButtons(){for(const id of ['open','save','save-as','undo','reset']) {const b=el<HTMLButtonElement>(id);b.disabled=busy||persisting||(id!=='open'&&!snapshot)||(id==='undo'&&!snapshot?.historyLength)||(id==='save'&&!snapshot?.dirty&&draft===draftInitial);};el<HTMLButtonElement>('save').classList.toggle('working',busy);}
+function updateButtons(){for(const id of ['open','save','save-as','undo','reset']) {const b=el<HTMLButtonElement>(id);b.disabled=busy||persisting||(id!=='open'&&!snapshot)||(id==='undo'&&!snapshot?.historyLength);};el<HTMLButtonElement>('save').classList.toggle('working',busy);}
 function rootFields():{path:SavePath;category:string;title?:string}[] {
   if(!snapshot)return [];
   const result:{path:SavePath;category:string;title?:string}[]=[];
@@ -150,7 +150,7 @@ document.addEventListener('click',async event=>{
   const row=target.closest<HTMLButtonElement>('[data-path]');if(row){if(!await allowDraftChange())return;selected=row.dataset.path!;const node=nodes.get(selected)!;draft=node.kind==='string'?String(node.value??''):node.raw;draftInitial=draft;render();}
 });
 el('open').onclick=async()=>{if(((snapshot?.dirty)||draft!==draftInitial)&&!await confirmDialog('打开其他存档？','尚未保存的修改或输入会被丢弃。','打开其他存档'))return;const next=await action(()=>invoke<Snapshot|null>('open_document'));if(next){active='common';expanded.clear();rawOpenPaths.clear();openFoldedCategories.clear();selected=null;updateSnapshot(next);}};
-interface SavePlan {token:string;destination:string;exists:boolean;identity:{label:string};changedCount:number}
+interface SavePlan {token:string;destination:string;exists:boolean;identity:{label:string};changedCount:number;systemSummary:{path:string;slotIndex:number}|null}
 async function persist(asNew:boolean) {
   if(persisting||busy||!snapshot)return;
   persisting=true;updateButtons();
@@ -158,9 +158,10 @@ async function persist(asNew:boolean) {
     if(draft!==draftInitial) {await applySelected();if(draft!==draftInitial)return;}
     const plan=await action(()=>invoke<SavePlan|null>(asNew?'prepare_save_as':'prepare_save',asNew?{destination:null}:{}),false);
     if(!plan)return;
-    if(!asNew&&!await confirmDialog('保存并覆盖当前存档？',`${plan.destination}\n${plan.identity.label}，${plan.changedCount} 项修改。`,'保存并覆盖')) {await invoke('cancel_save');return;}
+    const summary=plan.systemSummary?`\n同时更新 ${plan.systemSummary.path} 的第 ${plan.systemSummary.slotIndex+1} 个槽位：等级、保存时间、难度和游玩时间。`:'';
+    if((!asNew||plan.systemSummary)&&!await confirmDialog(asNew?'保存并同步存档列表？':'保存并覆盖当前存档？',`${plan.destination}\n${plan.identity.label}，${plan.changedCount} 项修改。${summary}`,asNew?'保存并同步':'保存并覆盖')) {await invoke('cancel_save');return;}
     const saved=await action(()=>invoke<Snapshot>('commit_save',{token:plan.token}));
-    if(saved){lastSaved=true;render();notice(`已保存，加密校验通过。${saved.source}`);}
+    if(saved){lastSaved=true;render();notice(`已保存，加密校验通过。${saved.source}${plan.systemSummary?'；已同步同目录 s.sd 的槽位摘要。':''}`);}
   } finally {persisting=false;updateButtons();}
 }
 el('save').onclick=()=>persist(false);

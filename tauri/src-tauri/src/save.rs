@@ -1,12 +1,14 @@
 //! Lossless ES3 editing: retain source bytes and replace only the selected span.
+mod slot_summary;
+mod write_batch;
 use aes::cipher::{block_padding::Pkcs7, BlockDecryptMut, BlockEncryptMut, KeyIvInit};
 use rand::RngCore;
 use serde::Serialize;
 use sha2::{Digest, Sha256};
+pub use slot_summary::SystemSummaryPlan;
 use std::{
     collections::{BTreeMap, BTreeSet},
-    fs::{self, OpenOptions},
-    io::Write,
+    fs,
     path::{Path, PathBuf},
 };
 
@@ -513,6 +515,7 @@ pub struct SavePlan {
     pub exists: bool,
     pub identity: SaveIdentity,
     pub changed_count: usize,
+    pub system_summary: Option<SystemSummaryPlan>,
     target_hash: Option<String>,
     content_hash: String,
 }
@@ -777,6 +780,7 @@ impl Document {
             exists: target_hash.is_some(),
             identity: id,
             changed_count: changes.len(),
+            system_summary: slot_summary::prepare(&destination, &root, password)?,
             target_hash,
             content_hash: digest(&self.bytes()),
         })
@@ -790,6 +794,9 @@ impl Document {
         if current.target_hash != plan.target_hash {
             return Err("确认后目标文件发生变化，请重新保存".into());
         }
+        if current.system_summary != plan.system_summary {
+            return Err("确认后系统存档发生变化，请重新保存".into());
+        }
         let (text, root, _) = self.content_for_destination(destination)?;
         let mut bytes = if self.bom {
             vec![0xef, 0xbb, 0xbf]
@@ -801,42 +808,15 @@ impl Document {
         if decrypt(&cipher, password)? != bytes {
             return Err("加密校验失败，文件未保存".into());
         }
-        let temporary = destination.with_file_name(format!(
-            ".{}.{}.tmp",
-            destination
-                .file_name()
-                .unwrap_or_default()
-                .to_string_lossy(),
-            plan.token
-        ));
-        let result = (|| -> Result<()> {
-            let mut file = OpenOptions::new()
-                .create_new(true)
-                .write(true)
-                .open(&temporary)
-                .map_err(|e| e.to_string())?;
-            file.write_all(&cipher).map_err(|e| e.to_string())?;
-            file.sync_all().map_err(|e| e.to_string())?;
-            drop(file);
-            if decrypt(&fs::read(&temporary).map_err(|e| e.to_string())?, password)? != bytes {
-                return Err("写入后的加密校验失败，原文件未覆盖".into());
-            }
-            self.verify_source()?;
-            let target_hash = if destination.exists() {
-                Some(digest(&fs::read(destination).map_err(|e| e.to_string())?))
-            } else {
-                None
-            };
-            if target_hash != plan.target_hash {
-                return Err("目标文件已变化，原文件未覆盖".into());
-            }
-            fs::rename(&temporary, destination).map_err(|e| format!("保存失败：{e}"))?;
-            Ok(())
-        })();
-        if result.is_err() {
-            let _ = fs::remove_file(&temporary);
+        let mut writes = vec![write_batch::WriteRequest {
+            destination: destination.to_path_buf(),
+            cipher: cipher.clone(),
+            original_hash: plan.target_hash.clone(),
+        }];
+        if let Some(summary) = &plan.system_summary {
+            writes.push(slot_summary::write_request(summary, &root, password)?);
         }
-        result?;
+        write_batch::commit(&writes, &plan.token, password, || self.verify_source())?;
         // Saved data becomes the new baseline; subsequent edits save to this file.
         self.source = destination
             .canonicalize()
@@ -855,7 +835,7 @@ impl Document {
 mod tests {
     use super::*;
     const TEXT: &str = r#"{"SaveDataSlotIndex":{"__type":"int","value":0},"GameStateData":{"__type":"ExposureUnnoticed2.Scripts.InGame.GameStateData,Assembly-CSharp","value":{"CurrentRp":55372,"HighPrecision":1.2345678901234567890123456789,"Items":{1:5,-1:0},"List":[true,"中文",null],"Unknown":{"x":2}}}}"#;
-    fn fixture() -> (Document, PathBuf) {
+    pub(super) fn fixture() -> (Document, PathBuf) {
         let dir = std::env::temp_dir().join(format!(
             "secretflashermanaka-rust-{}-{}",
             std::process::id(),
