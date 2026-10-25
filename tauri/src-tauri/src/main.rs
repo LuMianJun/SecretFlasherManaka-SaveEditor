@@ -1,6 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod save;
-use save::{Document, NodePath, Result, SavePlan, Snapshot};
+use save::{Document, NodePath, RepairPreview, Result, SavePlan, Snapshot};
 use std::{
     path::{Path, PathBuf},
     sync::Mutex,
@@ -86,6 +86,14 @@ fn add_entry(
         doc.add(&path, &fragment, key.as_deref(), bare)?;
         Ok(doc.snapshot())
     })
+}
+#[tauri::command]
+fn preview_repair(state: tauri::State<AppState>) -> Result<RepairPreview> {
+    with_document(&state, |doc| doc.preview_repair())
+}
+#[tauri::command]
+fn apply_repair(content_hash: String, state: tauri::State<AppState>) -> Result<Snapshot> {
+    with_document(&state, |doc| doc.apply_repair(&content_hash))
 }
 #[tauri::command]
 fn delete_entry(path: NodePath, state: tauri::State<AppState>) -> Result<Snapshot> {
@@ -272,6 +280,8 @@ fn main() {
             replace_value,
             add_entry,
             delete_entry,
+            preview_repair,
+            apply_repair,
             undo_document,
             reset_document,
             prepare_save,

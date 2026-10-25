@@ -1,4 +1,6 @@
 //! Lossless ES3 editing: retain source bytes and replace only the selected span.
+mod repair;
+pub use repair::RepairPreview;
 mod slot_summary;
 mod write_batch;
 use aes::cipher::{block_padding::Pkcs7, BlockDecryptMut, BlockEncryptMut, KeyIvInit};
@@ -404,6 +406,7 @@ pub struct Snapshot {
     pub changed_entries: Vec<Change>,
     pub identity: SaveIdentity,
     pub identity_error: Option<String>,
+    pub repair_requires_copy: bool,
 }
 #[derive(Clone, Debug, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
@@ -414,6 +417,9 @@ pub struct SaveIdentity {
 }
 fn field_path(names: &[&str]) -> NodePath {
     names.iter().map(|v| Segment::Key((*v).into())).collect()
+}
+fn is_progress_root(root: &Node) -> bool {
+    matches!(root.get(&field_path(&["GameStateData", "__type"])).map(|n| &n.scalar), Ok(Scalar::Text(t)) if t == "ExposureUnnoticed2.Scripts.InGame.GameStateData,Assembly-CSharp")
 }
 fn identity(root: &Node) -> Result<SaveIdentity> {
     if root.get(&field_path(&["GameStateData"])).is_ok() {
@@ -519,6 +525,10 @@ pub struct SavePlan {
     target_hash: Option<String>,
     content_hash: String,
 }
+struct UndoState {
+    text: String,
+    protected_source: Option<PathBuf>,
+}
 pub struct Document {
     pub source: PathBuf,
     original_cipher: Vec<u8>,
@@ -526,8 +536,9 @@ pub struct Document {
     original_root: Node,
     pub text: String,
     root: Node,
-    history: Vec<String>,
+    history: Vec<UndoState>,
     bom: bool,
+    protected_source: Option<PathBuf>,
 }
 impl Document {
     pub fn load(source: &Path, password: &str) -> Result<Self> {
@@ -543,7 +554,11 @@ impl Document {
         if !matches!(root.scalar, Scalar::Object) {
             return Err("存档顶层必须是对象".into());
         }
-        identity(&root)?;
+        if let Err(error) = identity(&root) {
+            // A recognizable progress header permits previewing identity repair.
+            // Saving still requires a valid identity; unrelated files remain rejected.
+            if !is_progress_root(&root) { return Err(error); }
+        }
         Ok(Self {
             source,
             original_cipher,
@@ -553,6 +568,7 @@ impl Document {
             root,
             history: Vec::new(),
             bom,
+            protected_source: None,
         })
     }
     pub fn bytes(&self) -> Vec<u8> {
@@ -607,6 +623,7 @@ impl Document {
                 label: "存档 ID 无效".into(),
             }),
             identity_error,
+            repair_requires_copy: self.protected_source.as_ref() == Some(&self.source),
         }
     }
     fn commit(&mut self, text: String) -> Result<()> {
@@ -615,7 +632,10 @@ impl Document {
             return Err("存档顶层必须是对象".into());
         }
         if text != self.text {
-            self.history.push(std::mem::replace(&mut self.text, text));
+            self.history.push(UndoState {
+                text: std::mem::replace(&mut self.text, text),
+                protected_source: self.protected_source.clone(),
+            });
             self.root = root;
         }
         Ok(())
@@ -688,15 +708,21 @@ impl Document {
         self.commit(format!("{}{}", &self.text[..start], &self.text[end..]))
     }
     pub fn undo(&mut self) -> Result<()> {
-        if let Some(text) = self.history.last() {
-            let root = parse(text)?;
+        if let Some(previous) = self.history.last() {
+            let root = parse(&previous.text)?;
             self.root = root;
-            self.text = self.history.pop().unwrap();
+            let previous = self.history.pop().unwrap();
+            self.text = previous.text;
+            self.protected_source = previous.protected_source;
         }
         Ok(())
     }
     pub fn reset(&mut self) -> Result<()> {
-        self.commit(self.original_text.clone())
+        self.commit(self.original_text.clone())?;
+        if self.protected_source.as_ref() == Some(&self.source) {
+            self.protected_source = None;
+        }
+        Ok(())
     }
     fn verify_source(&self) -> Result<()> {
         if fs::read(&self.source).map_err(|e| e.to_string())? != self.original_cipher {
@@ -750,6 +776,9 @@ impl Document {
                 .map_err(|e| format!("保存目录不可用：{e}"))?;
             parent.join(absolute.file_name().ok_or("文件名无效")?)
         };
+        if self.protected_source.as_ref() == Some(&destination) {
+            return Err("修复后的存档必须另存到其他文件，原文件保留不覆盖".into());
+        }
         let (text, root, id) = self.content_for_destination(&destination)?;
         let target_hash = if destination.exists() {
             let target = Document::load(&destination, password)?;

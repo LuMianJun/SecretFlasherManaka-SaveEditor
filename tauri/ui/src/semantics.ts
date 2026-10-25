@@ -2,7 +2,7 @@ export type Key = string | number;
 export type SavePath = Key[];
 export interface SaveNode { path: SavePath; kind: 'object'|'array'|'number'|'bool'|'string'|'null'; raw: string; value?: string|boolean|null; children:Key[]; bareKeys:string[] }
 export interface Change {path:SavePath;operation:string;before:string|null;after:string|null}
-export interface Snapshot {source:string;sourceHash:string;nodes:SaveNode[];nodeCount:number;historyLength:number;dirty:boolean;changedEntries:Change[];identity:{kind:string;slotIndex:number|null;label:string};identityError:string|null}
+export interface Snapshot {source:string;sourceHash:string;nodes:SaveNode[];nodeCount:number;historyLength:number;dirty:boolean;changedEntries:Change[];identity:{kind:string;slotIndex:number|null;label:string};identityError:string|null;repairRequiresCopy?:boolean}
 export interface Rules {keyTables:Record<string,string>;valueTables:Record<string,string>;listTables:Record<string,string>;reinforcementTables:string[];lockTables:string[];stageDroneTables:string[]}
 export type SaveType = 'manual'|'system'|'progress';
 export interface ScopeRule {path:string[];types:SaveType[];description:string;badge?:string;state?:'read'|'metadata'|'reset'|'conditional'}

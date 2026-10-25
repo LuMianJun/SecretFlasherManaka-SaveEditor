@@ -12,7 +12,7 @@ let active='common',query='',selected:string|null=null,expanded=new Set<string>(
 const rawOpenPaths=new Set<string>();
 const openFoldedCategories=new Set<string>();
 const categoryIcons:Record<string,string>={common:'spark',basic:'grid',player:'person',tasks:'book',inventory:'box',growth:'spark',world:'map',statistics:'chart',character:'person',settings:'sliders',other:'folder'};
-app.innerHTML=`<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-icon">${svg('sliders')}</div><div class="brand-name">SecretFlasherManaka<span>存档编辑器</span></div></div><div class="nav-label">存档内容</div><nav id="categories"></nav><div class="nav-label advanced-label">高级</div><button class="nav-item raw-nav" data-category="raw">${svg('book')}<span>完整原始结构</span></button><div class="sidebar-bottom"><span class="status-dot"></span>本地运行 · 存档编辑<small>存档数据不会上传</small></div></aside><main class="workspace"><header class="topbar"><div><span class="eyebrow">SAVE EDITOR</span><h1>存档管理与编辑</h1><p>读取完整存档，按原版名称编辑。</p></div><div class="header-actions"><button class="button secondary" id="open">${svg('folder')}打开存档</button><button class="button secondary" id="save-as">${svg('folder')}另存为</button><button class="button primary" id="save">${svg('save')}保存</button></div></header><section id="source" class="source-card"></section><div id="notice" class="notice" role="status" hidden></div><section class="content-card"><div class="content-toolbar"><div><h2 id="category-title"></h2><span id="category-summary"></span></div><div class="table-actions"><label class="search">${svg('search')}<input id="search" placeholder="搜索字段、物品或当前值" spellcheck="false"><button id="clear-search" title="清除搜索" hidden>×</button></label><button id="undo" class="icon-button" title="撤销上一步">${svg('undo')}</button><button id="changes" class="button subtle">改动 <span id="change-count">0</span></button></div></div><div class="editor-layout"><section class="data-pane"><div class="table-heading"><span>存档内容</span><span>当前值</span></div><div id="data-list" class="data-list"></div><div class="table-footer"><label><input type="checkbox" id="show-raw">显示原始字段与编号</label><button id="reset" class="text-button">还原全部修改</button></div></section><aside id="details" class="details-pane"></aside></div></section><footer class="page-footer"><span id="footer-state"></span><span>原版数据结构 · 加密后自动校验</span></footer></main></div><div id="modal-root"></div>`;
+app.innerHTML=`<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-icon">${svg('sliders')}</div><div class="brand-name">SecretFlasherManaka<span>存档编辑器</span></div></div><div class="nav-label">存档内容</div><nav id="categories"></nav><div class="nav-label advanced-label">高级</div><button class="nav-item raw-nav" data-category="raw">${svg('book')}<span>完整原始结构</span></button><div class="sidebar-bottom"><span class="status-dot"></span>本地运行 · 存档编辑<small>存档数据不会上传</small></div></aside><main class="workspace"><header class="topbar"><div><span class="eyebrow">SAVE EDITOR</span><h1>存档管理与编辑</h1><p>读取完整存档，按原版名称编辑。</p></div><div class="header-actions"><button class="button secondary" id="repair">${svg('sliders')}修复存档</button><button class="button secondary" id="open">${svg('folder')}打开存档</button><button class="button secondary" id="save-as">${svg('folder')}另存为</button><button class="button primary" id="save">${svg('save')}保存</button></div></header><section id="source" class="source-card"></section><div id="notice" class="notice" role="status" hidden></div><section class="content-card"><div class="content-toolbar"><div><h2 id="category-title"></h2><span id="category-summary"></span></div><div class="table-actions"><label class="search">${svg('search')}<input id="search" placeholder="搜索字段、物品或当前值" spellcheck="false"><button id="clear-search" title="清除搜索" hidden>×</button></label><button id="undo" class="icon-button" title="撤销上一步">${svg('undo')}</button><button id="changes" class="button subtle">改动 <span id="change-count">0</span></button></div></div><div class="editor-layout"><section class="data-pane"><div class="table-heading"><span>存档内容</span><span>当前值</span></div><div id="data-list" class="data-list"></div><div class="table-footer"><label><input type="checkbox" id="show-raw">显示原始字段与编号</label><button id="reset" class="text-button">还原全部修改</button></div></section><aside id="details" class="details-pane"></aside></div></section><footer class="page-footer"><span id="footer-state"></span><span>原版数据结构 · 加密后自动校验</span></footer></main></div><div id="modal-root"></div>`;
 const el=<T extends HTMLElement=HTMLElement>(id:string)=>document.getElementById(id) as T;
 document.querySelector('.topbar h1')!.textContent='存档管理与编辑';
 function notice(text:string,error=false) {const target=el('notice');target.hidden=!text;target.classList.toggle('error',error);target.textContent=text;}
@@ -29,7 +29,7 @@ async function action<T>(work:()=>Promise<T>,apply=true):Promise<T|undefined> {
   catch(error){notice(String(error),true);return undefined;}
   finally{busy=false;updateButtons();}
 }
-function updateButtons(){for(const id of ['open','save','save-as','undo','reset']) {const b=el<HTMLButtonElement>(id);b.disabled=busy||persisting||(id!=='open'&&!snapshot)||(id==='undo'&&!snapshot?.historyLength);};el<HTMLButtonElement>('save').classList.toggle('working',busy);}
+function updateButtons(){for(const id of ['open','save','save-as','undo','reset','repair']) {const b=el<HTMLButtonElement>(id);b.disabled=busy||persisting||(id!=='open'&&!snapshot)||(id==='undo'&&!snapshot?.historyLength)||(id==='repair'&&snapshot?.identity.kind==='system');};el<HTMLButtonElement>('save').classList.toggle('working',busy);}
 function rootFields():{path:SavePath;category:string;title?:string}[] {
   if(!snapshot)return [];
   const result:{path:SavePath;category:string;title?:string}[]=[];
@@ -121,6 +121,23 @@ function renderDetails() {
   if(el('add'))el('add').onclick=async()=>{if(await allowDraftChange()){selectPath(node.path);addDialog(node);}};
   if(el('delete'))el('delete').onclick=()=>deleteSelected();
 }
+interface RepairChange {path:SavePath;operation:string;reason:string;before:string|null;after:string|null}
+interface RepairPreview {profile:string;contentHash:string;changes:RepairChange[]}
+async function repairDialog() {
+  if(!snapshot||busy||persisting)return;
+  if(draft!==draftInitial){notice('请先暂存或撤销当前输入，再扫描修复。',true);return;}
+  const preview=await action(()=>invoke<RepairPreview>('preview_repair'),false);
+  if(!preview)return;
+  const rows=preview.changes.map(change=>`<article><span class="change-operation">${escape(change.operation)}</span><h3>${escape(sem.breadcrumbs(change.path))}</h3><p>${escape(change.reason)}</p><div><span>原值</span><code>${escape(change.before??'缺失')}</code></div><div><span>修复后</span><code>${escape(change.after??'移除')}</code></div></article>`).join('');
+  showModal(`<h2>清理扩展数据＋补全原版数据</h2><p class="modal-description">按工具内置的原版规则扫描。所有扩展任务、物品、服饰等记录都将被移除；缺失数据补默认值，无法找回丢失的真实进度。应用后可撤销，保存时必须另存副本。</p><p>${escape(preview.profile)} · ${preview.changes.length} 项修复</p><div class="changes-list">${rows||'<p>没有发现需要修复的内容。</p>'}</div><div class="modal-actions"><button class="button secondary" id="repair-cancel">取消</button><button class="button primary" id="repair-apply" ${preview.changes.length?'':'disabled'}>应用修复</button></div>`,true);
+  el('modal-root').querySelector('.modal')!.classList.add('repair-modal');
+  el('repair-cancel').onclick=closeModal;
+  el('repair-apply').onclick=async()=>{
+    const next=await action(()=>invoke<Snapshot>('apply_repair',{contentHash:preview.contentHash}));
+    if(next){closeModal();notice(`已应用 ${preview.changes.length} 项修复，尚未写入文件。点击“保存”将另存副本；可撤销本批修复。`);}
+  };
+}
+
 async function confirmDialog(title:string,text:string,confirm='继续'):Promise<boolean>{return new Promise(resolve=>{showModal(`<h2>${escape(title)}</h2><p class="modal-description">${escape(text)}</p><div class="modal-actions"><button class="button secondary" id="modal-cancel">取消</button><button class="button primary" id="modal-confirm">${escape(confirm)}</button></div>`);el('modal-cancel').onclick=()=>{closeModal();resolve(false);};el('modal-confirm').onclick=()=>{closeModal();resolve(true);};});}
 function showModal(content:string,wide=false){el('modal-root').innerHTML=`<div class="modal-backdrop"><section role="dialog" aria-modal="true" class="modal ${wide?'wide':''}">${content}</section></div>`;}
 function closeModal(){el('modal-root').innerHTML='';}
@@ -153,6 +170,7 @@ el('open').onclick=async()=>{if(((snapshot?.dirty)||draft!==draftInitial)&&!awai
 interface SavePlan {token:string;destination:string;exists:boolean;identity:{label:string};changedCount:number;systemSummary:{path:string;slotIndex:number}|null}
 async function persist(asNew:boolean) {
   if(persisting||busy||!snapshot)return;
+  asNew=asNew||!!snapshot.repairRequiresCopy;
   persisting=true;updateButtons();
   try {
     if(draft!==draftInitial) {await applySelected();if(draft!==draftInitial)return;}
@@ -164,6 +182,7 @@ async function persist(asNew:boolean) {
     if(saved){lastSaved=true;render();notice(`已保存，加密校验通过。${saved.source}${plan.systemSummary?'；已同步同目录 s.sd 的槽位摘要。':''}`);}
   } finally {persisting=false;updateButtons();}
 }
+el('repair').onclick=()=>repairDialog();
 el('save').onclick=()=>persist(false);
 el('save-as').onclick=()=>persist(true);
 document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='s'){event.preventDefault();if(!el('modal-root').children.length)void persist(event.shiftKey);}});
