@@ -5,12 +5,27 @@ use std::{
     path::{Path, PathBuf},
     sync::Mutex,
 };
-use tauri::Emitter;
+use tauri::{Emitter, Manager};
 
 struct AppState {
+    ui_locale: Mutex<String>,
     document: Mutex<Option<Document>>,
     launch: serde_json::Value,
     pending_save: Mutex<Option<SavePlan>>,
+}
+fn ui_text(state: &AppState, message: &str) -> String {
+    let locale = state.ui_locale.lock().map(|value| value.clone()).unwrap_or_else(|_| "sc".into());
+    let messages: serde_json::Value = serde_json::from_str(include_str!("../../ui/src/data/messages.json")).unwrap();
+    messages.get(message).and_then(|item| item.get(&locale)).and_then(|value| value.as_str()).unwrap_or(message).into()
+}
+#[tauri::command]
+fn set_ui_locale(locale: String, app: tauri::AppHandle, state: tauri::State<AppState>) -> Result<()> {
+    if !["sc", "tc", "en", "ja", "ko"].contains(&locale.as_str()) { return Err("Unsupported editor language".into()); }
+    *state.ui_locale.lock().map_err(|_| "Cannot update editor language")? = locale;
+    if let Some(window) = app.get_webview_window("main") {
+        window.set_title(&format!("SecretFlasherManaka {}", ui_text(&state, "存档编辑器"))).map_err(|error| error.to_string())?;
+    }
+    Ok(())
 }
 fn password() -> String {
     serde_json::from_str::<serde_json::Value>(include_str!("../../../format_config.json")).unwrap()
@@ -54,9 +69,9 @@ fn load_document(path: String, state: tauri::State<AppState>) -> Result<Snapshot
 #[tauri::command]
 fn open_document(state: tauri::State<AppState>) -> Result<Option<Snapshot>> {
     let mut dialog = rfd::FileDialog::new()
-        .set_title("打开 SecretFlasherManaka 存档")
-        .add_filter("游戏存档", &["sd"])
-        .add_filter("所有文件", &["*"]);
+        .set_title(ui_text(&state, "打开 SecretFlasherManaka 存档"))
+        .add_filter(ui_text(&state, "游戏存档"), &["sd"])
+        .add_filter(ui_text(&state, "所有文件"), &["*"]);
     dialog = dialog.set_directory(game_save_directory());
     match dialog.pick_file() {
         Some(path) => load_document(path.display().to_string(), state).map(Some),
@@ -178,10 +193,10 @@ fn prepare_save_as(
                 ))
             })?;
             match rfd::FileDialog::new()
-                .set_title("SecretFlasherManaka 存档另存为")
+                .set_title(ui_text(&state, "SecretFlasherManaka 存档另存为"))
                 .set_directory(directory)
                 .set_file_name(filename)
-                .add_filter("SecretFlasherManaka 存档", &["sd"])
+                .add_filter(ui_text(&state, "SecretFlasherManaka 存档"), &["sd"])
                 .save_file()
             {
                 Some(path) => path,
@@ -265,6 +280,7 @@ fn main() {
         None => (None, None),
     };
     let state = AppState {
+        ui_locale: Mutex::new("sc".into()),
         document: Mutex::new(document),
         launch: serde_json::json!({"source":source,"startupError":error,"defaultDirectory":game_save_directory()}),
         pending_save: Mutex::new(None),
@@ -272,6 +288,7 @@ fn main() {
     tauri::Builder::default()
         .manage(state)
         .invoke_handler(tauri::generate_handler![
+            set_ui_locale,
             get_metadata,
             get_launch_options,
             get_document,
