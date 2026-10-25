@@ -73,7 +73,14 @@ export class Semantics {
       if(n>=10100&&n<10110) return `壁挂假阳具 ${n-10099}`;
     }
     const name=this.table(table)[String(id)];
-    if(name!==undefined) return name;
+    if(name!==undefined) {
+      // Original mission IDs encode MMissionArea.StageType * 10000 + record index.
+      if(table==='missions') {
+        const stage=this.table('stages')[String(Math.floor(Number(id)/10000))];
+        if(stage!==undefined) return `【${stage}】${name}`;
+      }
+      return name;
+    }
     if(table==='missions'||table==='drone_missions') return `未知任务（编号 ${id}，存档未记录名称）`;
     return `未知条目（编号 ${id}）`;
   }
@@ -81,7 +88,10 @@ export class Semantics {
     if(!path.length) return '完整存档';
     const field=path.at(-1)!, parent=String(path.at(-2)??''), grand=String(path.at(-3)??'');
     if(this.meta.rules.keyTables[parent]) return this.named(this.meta.rules.keyTables[parent],field);
-    if(this.meta.rules.stageDroneTables.includes(grand)) return this.named('drone_missions',field);
+    if(this.meta.rules.stageDroneTables.includes(grand)) {
+      const name=this.named('drone_missions',field),stage=this.table('stages')[parent];
+      return stage!==undefined?`【${stage}】${name}`:name;
+    }
     if(typeof field==='number') {
       if(this.meta.rules.reinforcementTables.includes(grand)) return `强化效果 ${field+1}`;
       if(this.meta.rules.lockTables.includes(grand)) return field<3?`锁定强化效果 ${field+1}`:'仅负面效果';

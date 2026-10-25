@@ -24,7 +24,29 @@ test('Dropped dildo instances retain distinct names',()=>assert.equal(sem.value(
 test('Skin palette and common/pose shortcut actions are named',()=>{assert.ok(sem.value(node(['PlayerCustomData','value','CustomizeSkinColor'],'0')).includes('#'));assert.ok(!/^\d+$/.test(sem.value(node([...game,'RingShortcutModelIndexSkill'],'8'))));});
 test('Unknown task IDs explicitly report unavailable names without guessing origin',()=>{for(const id of ['109003','69001','999999'])assert.equal(sem.name([...game,'MissionAchieveCountDict',id]),`未知任务（编号 ${id}，存档未记录名称）`);assert.equal(sem.name([...game,'DroneMissionAchieveCountDict','999999']),'未知任务（编号 999999，存档未记录名称）');});
 test('Unknown task history remains visible and editable',()=>{for(const field of ['MissionAchieveCountDict','MissionMaxRpBonus100Dict','DroneMissionAchieveCountDict']){assert.equal(sem.isVisible([...game,field,'999999']),true);assert.equal(sem.choices(node([...game,field,'999999'],'2')).length,0);}assert.equal(sem.value(node([...game,'MissionAchieveCountDict','999999'],'2')),'2 次');assert.equal(sem.value(node([...game,'MissionMaxRpBonus100Dict','999999'],'150')),'1.5 倍');});
-test('Task names use only the original catalog without embedded custom mappings',()=>{assert.equal(sem.name([...game,'MissionAchieveCountDict','60000']),metadata.catalog.missions['60000']);assert.equal(Object.hasOwn(metadata.catalog,'custom_missions'),false);for(const key of ['custom_mission_sources','ambiguous_historical_custom_missions'])assert.equal(Object.hasOwn(metadata.catalog.meta,key),false);assert.equal(Object.hasOwn(metadata.catalog.meta.counts,'custom_missions'),false);const catalog=JSON.parse(fs.readFileSync(new URL('./src/data/name_catalog.json',import.meta.url),'utf8'));assert.deepEqual(catalog,metadata.catalog);});
+test('Task names use only the original catalog without embedded custom mappings',()=>{assert.equal(sem.name([...game,'MissionAchieveCountDict','60000']),`【便利店】${metadata.catalog.missions['60000']}`);assert.equal(Object.hasOwn(metadata.catalog,'custom_missions'),false);for(const key of ['custom_mission_sources','ambiguous_historical_custom_missions'])assert.equal(Object.hasOwn(metadata.catalog.meta,key),false);assert.equal(Object.hasOwn(metadata.catalog.meta.counts,'custom_missions'),false);const catalog=JSON.parse(fs.readFileSync(new URL('./src/data/name_catalog.json',import.meta.url),'utf8'));assert.deepEqual(catalog,metadata.catalog);});
+test('All original mission records include their scene in every mission dictionary',()=>{
+  const before=JSON.stringify(metadata);
+  for(const [id,name] of Object.entries(metadata.catalog.missions)) {
+    const stage=metadata.catalog.stages[String(Math.floor(Number(id)/10000))];
+    assert.ok(stage,id);
+    for(const [field,table] of Object.entries(metadata.rules.keyTables))if(table==='missions') {
+      const path=[...game,field,id],label=`【${stage}】${name}`;
+      assert.equal(sem.name(path),label);
+      assert.ok(sem.breadcrumbs(path).includes(label));
+    }
+  }
+  assert.notEqual(sem.name([...game,'MissionAchieveCountDict','60000']),sem.name([...game,'MissionAchieveCountDict','70000']));
+  assert.equal(JSON.stringify(metadata),before);
+});
+test('Drone scene labels use the per-scene dictionary key while totals keep their aggregate name',()=>{
+  for(const field of metadata.rules.stageDroneTables)for(const stage of ['6','10']) {
+    const path=[...game,field,stage,'0'];
+    assert.equal(sem.name(path),`【${metadata.catalog.stages[stage]}】${metadata.catalog.drone_missions['0']}`);
+  }
+  assert.equal(sem.name([...game,'DroneMissionAchieveCountDict','0']),metadata.catalog.drone_missions['0']);
+  assert.equal(sem.name([...game,'DroneMissionAchieveCountPerStageDictDict','999','0']),metadata.catalog.drone_missions['0']);
+});
 test('Unlocked fast-travel entries use destination names',()=>assert.equal(sem.value(node([...game,'ReleaseFastTravel',0],'3')),'便利店'));
 test('Native normalized mission progress is shown as percentage',()=>assert.equal(sem.value(node([...game,'MissionSatisfyDict','60000'],'0.5')),'50%'));
 test('Runtime fields and their descendants are absent from the view',()=>{assert.equal(sem.isVisible([...game,'CurrentEarnThisTimeRp']),false);assert.equal(sem.isVisible([...game,'MissionSatisfyDict','60000']),false);assert.equal(sem.isVisible(['OptionData','value','MissionPanel']),false);});
