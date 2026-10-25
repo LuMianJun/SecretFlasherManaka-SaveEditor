@@ -1,3 +1,5 @@
+**简体中文** · [繁體中文](README.zh-TW.md) · [English](README.en.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
+
 # SecretFlasherManaka 存档编辑器
 
 适用于 **SecretFlasherManaka** 的 Windows 独立存档编辑工具。
@@ -104,7 +106,7 @@ tauri/src-tauri/target/release/SecretFlasherManakaSaveEditor.exe
 ```text
 docs/               字段适用范围与保存时机说明
 tauri/
-  ui/             TypeScript 界面、样式与中文名称数据
+  ui/             TypeScript 界面、样式与多语言名称数据
   src-tauri/      Rust 存档解析、加解密、校验与桌面入口
   metadata.json   字段分类元数据
 format_config.json  存档格式配置
