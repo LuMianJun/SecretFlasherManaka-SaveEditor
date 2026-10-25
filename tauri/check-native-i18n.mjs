@@ -33,12 +33,24 @@ try{
  const ready=()=>until(()=>!!window.__saveEditor?.ready);
  const invoke=(command,args={})=>js((command,args)=>window.__TAURI_INTERNALS__.invoke(command,args),command,args);
  const reload=async()=>{await rpc('Page.reload');await new Promise(resolve=>setTimeout(resolve,150));await ready();};
- const language=async locale=>{await js(locale=>{const input=document.querySelector('#ui-language');input.value=locale;input.dispatchEvent(new Event('change',{bubbles:true}));},locale);await until(locale=>window.__saveEditor.locale===locale,locale);};
+ const language=async locale=>{await js(locale=>{if(!document.querySelector('[data-language-dialog]'))document.querySelector('#language-button').click();document.querySelector(`[data-locale="${locale}"]`).click();},locale);await until(locale=>window.__saveEditor.locale===locale&&!document.querySelector('[data-language-dialog]')&&!document.querySelector('#language-button').disabled,locale);};
  const check=async(name,fn)=>{await fn();checks.push(name);console.log('PASS '+name);};
  await ready();
  const before=await invoke('get_document');
+ await check('First launch prompts with native language names and does not silently save the Chinese default',async()=>{
+  assert.equal(await js(()=>document.documentElement.lang),'zh-Hans');
+  assert.equal(await js(()=>localStorage.getItem('secretflashermanaka-save-editor.locale')),null);
+  assert.equal(await js(()=>document.querySelector('[data-language-dialog]').dataset.languageDialog),'first');
+  assert.deepEqual(await js(()=>Array.from(document.querySelectorAll('.language-choice strong'),item=>item.textContent)),['简体中文','繁體中文','English','日本語','한국어']);
+  await rpc('Page.enable');fs.writeFileSync(path.join(output,'first-language-choice.png'),Buffer.from((await rpc('Page.captureScreenshot',{format:'png'})).data,'base64'));
+  await language('sc');assert.equal(await js(()=>localStorage.getItem('secretflashermanaka-save-editor.locale')),'sc');
+  await reload();assert.equal(await js(()=>!!document.querySelector('[data-language-dialog]')),false);
+ });
+
  await check('All five languages appear and switching preserves unapplied input and loaded save nodes',async()=>{
-  assert.deepEqual(await js(()=>Array.from(document.querySelector('#ui-language').options,option=>option.value)),['sc','tc','en','ja','ko']);
+  await js(()=>document.querySelector('#language-button').click());
+  assert.deepEqual(await js(()=>Array.from(document.querySelectorAll('[data-locale]'),button=>button.dataset.locale)),['sc','tc','en','ja','ko']);
+  await js(()=>document.querySelector('#language-cancel').click());
   await js(()=>{window.__saveEditor.select(['GameStateData','value','CurrentRp']);const input=document.querySelector('#value-input');input.value='123456789.123456789';input.dispatchEvent(new Event('input',{bubbles:true}));});
   for(const locale of ['en','ja','ko','tc','sc']){
    await language(locale);assert.equal(await js(()=>document.querySelector('#value-input').value),'123456789.123456789');
@@ -75,7 +87,7 @@ try{
   await invoke('load_document',{path:faultCopy});await reload();await language(locale);
   const original=await invoke('get_document');
   await js(()=>document.querySelector('#repair').click());await until(()=>!!document.querySelector('#repair-apply'));
-  assert.equal(await js(()=>document.querySelector('#ui-language').disabled),true);
+  assert.equal(await js(()=>document.querySelector('#language-button').disabled),true);
   const prose=await js(()=>Array.from(document.querySelectorAll('.repair-modal article p'),item=>item.textContent));
   if(['en','ko'].includes(locale))assert.ok(prose.every(text=>!/[\u4e00-\u9fff]/.test(text)));
   await js(()=>document.querySelector('#repair-cancel').click());assert.deepEqual((await invoke('get_document')).nodes,original.nodes);

@@ -15,14 +15,16 @@ const game = gameJson as unknown as {locales:Record<Locale,{labels:Record<string
 export const isLocale = (value:unknown):value is Locale => languages.some(item=>item.id===value);
 const storageKey='secretflashermanaka-save-editor.locale';
 let locale:Locale='sc';
+let savedLocale=false;
 try {
   const stored=localStorage.getItem(storageKey);
-  if(isLocale(stored))locale=stored;
+  if(isLocale(stored)){locale=stored;savedLocale=true;}
 } catch { /* The editor remains usable when local storage is unavailable. */ }
 export const getLocale=()=>locale;
-export function setLocale(value:Locale) {
+export const hasSavedLocale=()=>savedLocale;
+export function setLocale(value:Locale, persist=true) {
   locale=value;
-  try{localStorage.setItem(storageKey,value);}catch{}
+  if(persist){savedLocale=true;try{localStorage.setItem(storageKey,value);}catch{}}
   document.documentElement.lang=languages.find(item=>item.id===value)!.html;
   document.title=`SecretFlasherManaka ${tr('存档编辑器')}`;
 }

@@ -1,9 +1,10 @@
-import {tr, backendText, getLocale, setLocale, isLocale, languages, localizeMetadata, type Locale} from './i18n';
+import {tr, backendText, getLocale, hasSavedLocale, setLocale, isLocale, languages, localizeMetadata, type Locale} from './i18n';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { Semantics, pathKey, numeric, type Metadata, type Snapshot, type SaveNode, type SavePath, type Key } from './semantics';
 import './style.css';
 const icons: Record<string, string> = { folder: '<path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/>', save: '<path d="M5 3h12l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M7 3v6h10V3M7 21v-8h10v8"/>', search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>', chevron: '<path d="m9 5 7 7-7 7"/>', undo: '<path d="M3 10h10a7 7 0 1 1 0 14M3 10l5-5M3 10l5 5"/>', sliders: '<path d="M4 7h16M4 17h16M8 4v6M16 14v6"/>', spark: '<path d="m12 3 3 6 6 3-6 3-3 6-3-6-6-3 6-3 3-6Z"/>', check: '<path d="m5 12 4 4 10-10"/>', plus: '<path d="M12 5v14M5 12h14"/>', close: '<path d="m6 6 12 12M6 18 18 6"/>', clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>', person: '<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>', map: '<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5ZM9 3v16M15 5v16"/>', book: '<path d="M3 4h7l2 2 2-2h7v15h-7l-2 2-2-2H3V4ZM12 6v15"/>', box: '<path d="m3 7 9-4 9 4v10l-9 4-9-4V7ZM3 7l9 4 9-4M12 11v10"/>', chart: '<path d="M4 3v18h17M9 17v-4M14 17V8M19 17V4"/>' };
+icons.globe='<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a17 17 0 0 1 0 18 17 17 0 0 1 0-18Z"/>';
 const svg = (name: string) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] ?? icons.grid}</svg>`;
 const escape = (v: unknown) => String(v ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]!));
 const app = document.querySelector<HTMLDivElement>('#app')!;
@@ -14,15 +15,41 @@ const rawOpenPaths = new Set<string>();
 const openFoldedCategories = new Set<string>();
 const categoryIcons: Record<string, string> = { common: 'spark', basic: 'grid', player: 'person', tasks: 'book', inventory: 'box', growth: 'spark', world: 'map', statistics: 'chart', character: 'person', settings: 'sliders', other: 'folder' };
 function mountShell() {
-app.innerHTML = `<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-icon">${svg('sliders')}</div><div class="brand-name">SecretFlasherManaka<span>${escape(tr("存档编辑器"))}</span></div></div><div class="nav-label">${escape(tr("存档内容"))}</div><nav id="categories"></nav><div class="nav-label advanced-label">${escape(tr("高级"))}</div><button class="nav-item raw-nav" data-category="raw">${svg('book')}<span>${escape(tr("完整原始结构"))}</span></button><label class="locale-control"><span>${escape(tr("编辑器语言"))}</span><select id="ui-language" aria-label="${escape(tr("编辑器语言"))}">${languages.map(language=>`<option value="${language.id}" ${language.id===getLocale()?"selected":""}>${language.name}</option>`).join("")}</select></label><div class="sidebar-bottom"><span class="status-dot"></span>${escape(tr("本地运行 · 存档编辑"))}<small>${escape(tr("存档数据不会上传"))}</small></div></aside><main class="workspace"><header class="topbar"><div><span class="eyebrow">SAVE EDITOR</span><h1>${escape(tr("存档管理与编辑"))}</h1><p>${escape(tr("读取完整存档，按原版名称编辑。"))}</p></div><div class="header-actions"><button class="button secondary" id="repair">${svg('sliders')}${escape(tr("修复存档"))}</button><button class="button secondary" id="open">${svg('folder')}${escape(tr("打开存档"))}</button><button class="button secondary" id="save-as">${svg('folder')}${escape(tr("另存为"))}</button><button class="button primary" id="save">${svg('save')}${escape(tr("保存"))}</button></div></header><section id="source" class="source-card"></section><div id="notice" class="notice" role="status" hidden></div><section class="content-card"><div class="content-toolbar"><div><h2 id="category-title"></h2><span id="category-summary"></span></div><div class="table-actions"><label class="search">${svg('search')}<input id="search" placeholder="${escape(tr("搜索字段、物品或当前值"))}" spellcheck="false"><button id="clear-search" title="${escape(tr("清除搜索"))}" hidden>×</button></label><button id="undo" class="icon-button" title="${escape(tr("撤销上一步"))}">${svg('undo')}</button><button id="changes" class="button subtle">${escape(tr("改动"))} <span id="change-count">0</span></button></div></div><div class="editor-layout"><section class="data-pane"><div class="table-heading"><span>${escape(tr("存档内容"))}</span><span>${escape(tr("当前值"))}</span></div><div id="data-list" class="data-list"></div><div class="table-footer"><label><input type="checkbox" id="show-raw">${escape(tr("显示原始字段与编号"))}</label><button id="reset" class="text-button">${escape(tr("还原全部修改"))}</button></div></section><aside id="details" class="details-pane"></aside></div></section><footer class="page-footer"><span id="footer-state"></span><span>${escape(tr("原版数据结构 · 加密后自动校验"))}</span></footer></main></div><div id="modal-root"></div>`;
+app.innerHTML = `<div class="shell"><aside class="sidebar"><div class="brand"><div class="brand-icon">${svg('sliders')}</div><div class="brand-name">SecretFlasherManaka<span>${escape(tr("存档编辑器"))}</span></div></div><div class="nav-label">${escape(tr("存档内容"))}</div><nav id="categories"></nav><div class="nav-label advanced-label">${escape(tr("高级"))}</div><button class="nav-item raw-nav" data-category="raw">${svg('book')}<span>${escape(tr("完整原始结构"))}</span></button><div class="sidebar-bottom"><span class="status-dot"></span>${escape(tr("本地运行 · 存档编辑"))}<small>${escape(tr("存档数据不会上传"))}</small></div></aside><main class="workspace"><header class="topbar"><div><span class="eyebrow">SAVE EDITOR</span><h1>${escape(tr("存档管理与编辑"))}</h1><p>${escape(tr("读取完整存档，按原版名称编辑。"))}</p></div><div class="header-actions"><button id="language-button" class="button language-button" title="Language / 语言 / 言語 / 언어" aria-label="Language / 语言 / 言語 / 언어" aria-haspopup="dialog">${svg("globe")}<span>${languages.find(language=>language.id===getLocale())!.name}</span></button><button class="button secondary" id="repair">${svg('sliders')}${escape(tr("修复存档"))}</button><button class="button secondary" id="open">${svg('folder')}${escape(tr("打开存档"))}</button><button class="button secondary" id="save-as">${svg('folder')}${escape(tr("另存为"))}</button><button class="button primary" id="save">${svg('save')}${escape(tr("保存"))}</button></div></header><section id="source" class="source-card"></section><div id="notice" class="notice" role="status" hidden></div><section class="content-card"><div class="content-toolbar"><div><h2 id="category-title"></h2><span id="category-summary"></span></div><div class="table-actions"><label class="search">${svg('search')}<input id="search" placeholder="${escape(tr("搜索字段、物品或当前值"))}" spellcheck="false"><button id="clear-search" title="${escape(tr("清除搜索"))}" hidden>×</button></label><button id="undo" class="icon-button" title="${escape(tr("撤销上一步"))}">${svg('undo')}</button><button id="changes" class="button subtle">${escape(tr("改动"))} <span id="change-count">0</span></button></div></div><div class="editor-layout"><section class="data-pane"><div class="table-heading"><span>${escape(tr("存档内容"))}</span><span>${escape(tr("当前值"))}</span></div><div id="data-list" class="data-list"></div><div class="table-footer"><label><input type="checkbox" id="show-raw">${escape(tr("显示原始字段与编号"))}</label><button id="reset" class="text-button">${escape(tr("还原全部修改"))}</button></div></section><aside id="details" class="details-pane"></aside></div></section><footer class="page-footer"><span id="footer-state"></span><span>${escape(tr("原版数据结构 · 加密后自动校验"))}</span></footer></main></div><div id="modal-root"></div>`;
     el<HTMLInputElement>('search').value=query;
     el<HTMLInputElement>('show-raw').checked=showRaw;
     el('clear-search').hidden=!query;
     bindShellEvents();
-    el<HTMLSelectElement>('ui-language').onchange=async event=>{
-        const value=(event.target as HTMLSelectElement).value;
-        if(isLocale(value))await changeLanguage(value);
+    el('language-button').onclick=()=>languageDialog();
+}
+function languageDialog(firstRun=false) {
+    if(busy||persisting||el('modal-root').children.length)return;
+    const englishNames:Record<Locale,string>={sc:'Simplified Chinese',tc:'Traditional Chinese',en:'English',ja:'Japanese',ko:'Korean'};
+    showModal(`<div class="language-dialog" data-language-dialog="${firstRun?'first':'settings'}"><div class="language-dialog-heading"><div class="language-dialog-icon">${svg('globe')}</div><div><h2 id="language-dialog-title">Language / 语言</h2><p>Choose your language</p></div>${firstRun?'':`<button class="icon-button" id="language-cancel" aria-label="${escape(tr('取消'))}">${svg('close')}</button>`}</div><div class="language-options">${languages.map(language=>`<button class="language-choice ${language.id===getLocale()?'current':''}" data-locale="${language.id}" aria-pressed="${language.id===getLocale()}"><span><strong lang="${language.html}">${language.name}</strong><small lang="en">${englishNames[language.id]}</small></span>${svg(language.id===getLocale()?'check':'chevron')}</button>`).join('')}</div></div>`);
+    const modal=el('modal-root').querySelector<HTMLElement>('.modal')!;
+    modal.classList.add('language-modal');
+    modal.setAttribute('aria-labelledby','language-dialog-title');
+    const cancel=el<HTMLButtonElement>('language-cancel');
+    if(cancel)cancel.onclick=()=>{closeModal();el('language-button').focus();};
+    modal.querySelectorAll<HTMLButtonElement>('[data-locale]').forEach(button=>{
+        button.onclick=async()=>{
+            const value=button.dataset.locale;
+            if(!isLocale(value))return;
+            closeModal();await changeLanguage(value);
+            if(!hasSavedLocale())languageDialog(true);
+            else el('language-button').focus();
+        };
+    });
+    modal.onkeydown=event=>{
+        if(event.key==='Escape'){event.preventDefault();if(!firstRun)cancel.click();}
+        if(event.key==='Tab'){
+            const buttons=Array.from(modal.querySelectorAll<HTMLButtonElement>('button'));
+            const index=buttons.indexOf(document.activeElement as HTMLButtonElement);
+            if(event.shiftKey&&index<=0){event.preventDefault();buttons.at(-1)!.focus();}
+            else if(!event.shiftKey&&index===buttons.length-1){event.preventDefault();buttons[0].focus();}
+        }
     };
+    modal.querySelector<HTMLButtonElement>(`[data-locale="${getLocale()}"]`)!.focus();
 }
 async function changeLanguage(locale:Locale) {
     if(busy||persisting||el('modal-root').children.length)return;
@@ -33,7 +60,7 @@ async function changeLanguage(locale:Locale) {
         metadata=localizeMetadata(baseMetadata);
         sem=new Semantics(metadata,tr);
         mountShell();render();
-    }catch(error){el<HTMLSelectElement>('ui-language').value=getLocale();notice(backendText(String(error)),true);}
+    }catch(error){notice(backendText(String(error)),true);}
     finally{busy=false;updateButtons();}
 }
 
@@ -82,7 +109,7 @@ function updateButtons() { for (const id of ['open', 'save', 'save-as', 'undo', 
     const b = el<HTMLButtonElement>(id);
     b.disabled = busy || persisting || (id !== 'open' && !snapshot) || (id === 'undo' && !snapshot?.historyLength) || (id === 'repair' && snapshot?.identity.kind === 'system');
 } ; el<HTMLButtonElement>('save').classList.toggle('working', busy);
-    el<HTMLSelectElement>('ui-language').disabled=busy||persisting||el('modal-root').children.length>0; }
+    el<HTMLButtonElement>('language-button').disabled=busy||persisting||el('modal-root').children.length>0; }
 function rootFields(): {
     path: SavePath;
     category: string;
@@ -428,7 +455,7 @@ el<HTMLInputElement>('show-raw').onchange = event => { showRaw = (event.target a
 }
 async function startup() { try {
     baseMetadata = await invoke<Metadata>('get_metadata');
-    setLocale(getLocale());
+    setLocale(getLocale(),false);
     await invoke('set_ui_locale',{locale:getLocale()});
     metadata=localizeMetadata(baseMetadata);
     sem = new Semantics(metadata,tr);
@@ -447,11 +474,12 @@ async function startup() { try {
             return;
     } await invoke('close_app'); });
     (window as any).__saveEditor = { ready: true, get metadata(){return metadata;}, get locale(){return getLocale();}, get snapshot() { return snapshot; }, select: (path: SavePath) => { selected = pathKey(path); const n = nodes.get(selected)!; draft = n.kind === 'string' ? String(n.value) : n.raw; draftInitial = draft; render(); }, setCategory: (value: string) => { active = value; render(); } };
+    if(!hasSavedLocale())languageDialog(true);
     window.dispatchEvent(new Event('save-editor-ready'));
 }
 catch (error) {
     notice(tr("启动失败：") + String(error), true);
 } }
-setLocale(getLocale());
+setLocale(getLocale(),false);
 mountShell();
 startup();

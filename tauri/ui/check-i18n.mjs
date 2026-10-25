@@ -10,10 +10,11 @@ const compile=source=>ts.transpileModule(source,{compilerOptions:{module:ts.Modu
 const moduleFor=source=>'data:text/javascript;base64,'+Buffer.from(compile(source)).toString('base64');
 const {Semantics}=await import(moduleFor(read('./src/semantics.ts')));
 let source=read('./src/i18n.ts').replace(/import messagesJson[^;]+;/,'const messagesJson='+JSON.stringify(messages)+';').replace(/import gameJson[^;]+;/,'const gameJson='+JSON.stringify(names)+';');
-const {tr,setLocale,getLocale,localizeMetadata,backendText,languages}=await import(moduleFor(source));
+const {tr,setLocale,getLocale,hasSavedLocale,localizeMetadata,backendText,languages}=await import(moduleFor(source));
 let count=0;
 const test=(name,fn)=>{fn();count++;console.log('PASS '+name);};
 const locales=languages.map(item=>item.id);
+test('An unset preference uses Chinese without silently saving it',()=>{assert.equal(getLocale(),'sc');assert.equal(hasSavedLocale(),false);setLocale('sc',false);assert.equal(localStorage.value,null);assert.equal(hasSavedLocale(),false);});
 test('Five editor languages match the original dictionary columns',()=>assert.deepEqual(locales,['sc','tc','en','ja','ko']));
 test('All user-facing source messages have complete translations with identical placeholders',()=>{
  const keys=text=>[...text.matchAll(/\{\w*\}/g)].map(item=>item[0]).sort();
